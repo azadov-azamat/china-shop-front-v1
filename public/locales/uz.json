@@ -1,0 +1,25 @@
+{
+  "app": {
+    "title": "Sazu - Dunyoga biz bilan bog'lan"
+  },
+  "address-company": "Toshkent sh.Yunusobod t. Axmad Donish ko'chasi 20A",
+  "about-us": "Biz haqimizda",
+  "news": "Yangiliklar",
+  "about-team": " Jamoa haqida",
+  "contacts": "Kontaktlar",
+  "address": "Manzil",
+  "phone-number": "Telefon raqam",
+  "social-network": "Ijtimoiy tarmoqlar",
+  "more": "Batafsil",
+  "main": "Bosh sahifa",
+  "partners": "Hamkorlar",
+  "subscribe-newsletter": "Yangiliklarimizga obuna bo'ling",
+  "enter-email": "Email manzilingizni kiriting",
+  "subscribe": "Obuna bo'lish",
+  "subscribe-success": "Muvoffaqiyatli obuna bo'ldingiz",
+  "subscribe-exist": "Elektron pochta allaqachon ro'yxatdan o'tgan",
+  "subscribe-error": "Saqlashda xatolik, qayta urinib ko'ring",
+  "other-news": "Boshqa muhim yangiliklar",
+  "next": "Keyingisi",
+  "previous": "Oldingisi"
+}
