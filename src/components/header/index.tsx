@@ -1,20 +1,21 @@
-import { 
+import {
     LikeIcon,
-    BellIcon,
     BucketIcon,
     SearchIcon,
     MenuIcon
-} from "../icons"
+} from "../../assets/icons"
+import {NotificationComponent} from "../index.ts";
 
 export default function Component() {
     return (
-        <header>
+        <header className={'w-100 flex justify-between items-center'}>
+            <h2>UzChinaShop</h2>
             <div className="flex items-center gap-4">
-            <BellIcon/>
-            <BucketIcon/>
-            <LikeIcon/>
-            <SearchIcon/>
-            <MenuIcon/>
+                <NotificationComponent/>
+                <BucketIcon/>
+                <LikeIcon/>
+                <SearchIcon/>
+                <MenuIcon/>
             </div>
         </header>
     )

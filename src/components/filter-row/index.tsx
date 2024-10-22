@@ -2,7 +2,7 @@ import {
     SortToolIcon,
     GridViewIcon,
     FullViewIcon
-} from "../icons"
+} from "../../assets/icons"
 
 export default function Component() {
     return (

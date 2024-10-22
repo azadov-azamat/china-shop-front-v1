@@ -6,7 +6,7 @@ import {
     UploadIcon,
     DismissIcon,
     TruckIcon
-} from "../../components/icons"
+} from "../../assets/icons"
 
 export default function Controller() {
 
