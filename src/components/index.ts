@@ -1,6 +1,6 @@
-// export {default as NavbarSection} from './navbar';
-// export {default as FooterSection} from './footer';
-// export {default as HeaderSection} from './header';
+export {default as HeaderSection} from './header';
+export {default as TopMenuSection} from './top-menu';
+export {default as FilterRowSection} from './filter-row';
 // export {default as AboutSection} from './about';
 // export {default as PartnersSection} from './partners';
 // export {default as NewsSection} from './news';
