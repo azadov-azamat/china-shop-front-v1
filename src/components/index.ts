@@ -7,8 +7,8 @@ export {default as FilterRowSection} from './filter-row';
 // export {default as ContactSection} from './contact';
 // export {default as VideoPlayerSection} from './video-player';
 
-// export {default as ProjectCardComponent} from './project-card';
-// export {default as PageTitleComponent} from './page-title';
+export {default as StarRatingComponent} from './star-rating';
+export {default as ProductCardComponent} from './product-card';
 export {default as NotificationComponent} from './notification';
 export {default as SiteLoadingComponent} from './loading-site';
 // export {default as LanguageDropdownComponent} from './language-dropdown';

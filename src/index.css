@@ -6,3 +6,10 @@ body {
   @apply m-0 p-0 box-border !scroll-smooth;
   font-family: "Unbounded", sans-serif;
 }
+
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
