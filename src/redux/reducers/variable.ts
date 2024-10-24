@@ -175,7 +175,7 @@ export const variableSlice = createSlice({
     name: 'variable',
     initialState,
     reducers: reducers,
-    extraReducers: (builder) => {
+    // extraReducers: (builder) => {
         // builder.addCase(getSazusData.fulfilled, (state: InitialStateProps, action) => {
         //     state.projects = action.payload
         // })
@@ -184,7 +184,7 @@ export const variableSlice = createSlice({
         //     // @ts-ignore
         //     console.error(action.payload.message)
         // })
-    }
+    // }
 })
 
 export const {
