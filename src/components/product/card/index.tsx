@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 
 export default function Component({image, id, name, price}: productCardProps) {
     return (
-        <Link to={'product/' + id} className="relative text-center max-350:w-full">
+        <Link to={'/product/' + id} className="relative text-center max-350:w-full">
             <div
                 className="relative bg-primary-amber rounded-[30px] shadow-md p-4 max-350:w-full max-350:h-[250px] max-380:w-[150px] max-380:h-[170px] w-[170px] h-[208px] flex justify-center items-center">
                 <div className={'w-full h-[130px] max-350:h-[170px] object-center object-contain flex justify-center items-center'}>

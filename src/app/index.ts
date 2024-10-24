@@ -1,3 +1,5 @@
 export {default as IndexController} from './products'
 export {default as ProductPreviewController} from './products/view'
 export {default as CartController} from './my-cart'
+export {default as SearchController} from './search'
+export {default as FavoriteController} from './favorite'

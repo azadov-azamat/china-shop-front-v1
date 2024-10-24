@@ -5,6 +5,7 @@ import {
 } from "../../assets/icons"
 import {BucketComponent, NotificationComponent} from "../index.ts";
 import {useAppSelector} from "../../redux/hooks.ts";
+import {Link} from "react-router-dom";
 
 export default function Component() {
     const {carts} = useAppSelector(state => state.variables)
@@ -15,8 +16,12 @@ export default function Component() {
             <div className="flex items-center gap-4">
                 <NotificationComponent value={5} isActive={false}/>
                 <BucketComponent value={carts.length} isActive/>
-                <LikeIcon/>
-                <SearchIcon/>
+                <Link to={'/favorite'}>
+                    <LikeIcon/>
+                </Link>
+                <Link to={'/search'}>
+                    <SearchIcon/>
+                </Link>
                 <MenuIcon/>
             </div>
         </header>

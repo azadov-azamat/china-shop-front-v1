@@ -1,7 +1,7 @@
 import {
-    CartController,
+    CartController, FavoriteController,
     IndexController,
-    ProductPreviewController
+    ProductPreviewController, SearchController
 } from '../app/index';
 
 
@@ -23,5 +23,17 @@ export const routes = [
         name: 'bucket cart page',
         path: '/carts',
         component: CartController
+    },
+    {
+        id: 4,
+        name: 'search page',
+        path: '/search',
+        component: SearchController
+    },
+    {
+        id: 5,
+        name: 'favorite page',
+        path: '/favorite',
+        component: FavoriteController
     }
 ]
