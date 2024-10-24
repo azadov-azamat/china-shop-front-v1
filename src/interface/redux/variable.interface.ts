@@ -3,12 +3,16 @@ export interface InitialStateProps {
     subscribeLoading: boolean;
     product: productCardProps | null;
     products: productCardProps[] | [];
+    carts: cartCardProps[] | [];
     currentPage: number;
     pageCount: number;
     limit: number;
     totalCount: number;
 }
 
+export interface cartCardProps extends productCardProps{
+    quantity: number;
+}
 export interface productCardProps extends defaultKeys{
     image: string;
     name: string;

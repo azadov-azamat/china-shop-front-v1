@@ -1,5 +1,6 @@
 import {
-    IndexController, 
+    CartController,
+    IndexController,
     ProductPreviewController
 } from '../app/index';
 
@@ -16,5 +17,11 @@ export const routes = [
         name: 'product preview page',
         path: '/product/:id',
         component: ProductPreviewController
+    },
+    {
+        id: 3,
+        name: 'bucket cart page',
+        path: '/carts',
+        component: CartController
     }
 ]

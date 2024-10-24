@@ -69,7 +69,8 @@ export default function Controller() {
                                 -
                             </button>
                             <span className="border-t border-b px-4">{quantity}</span>
-                            <button disabled={quantity === product.stockQuantity} onClick={() => handleQuantityChange(1)} className="border rounded-r px-3 ">
+                            <button disabled={quantity === product.stockQuantity}
+                                    onClick={() => handleQuantityChange(1)} className="border rounded-r px-3 ">
                                 +
                             </button>
                         </div>

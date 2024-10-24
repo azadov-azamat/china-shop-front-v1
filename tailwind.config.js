@@ -8,6 +8,7 @@ export default {
         extend: {
             colors: {
                 "primary-blurple": "#6342E7",
+                "primary-blurple-dark": "#472CB6",
                 "primary-red": "#D8153A",
                 "primary-gray": "#A1A1A1",
                 "primary-amber": "#F1F4FB"

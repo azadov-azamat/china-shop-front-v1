@@ -1,7 +1,7 @@
 // import React from 'react';
 
-import {productCardProps} from "../../interface/redux/variable.interface.ts";
-import {LikeIcon} from "../../assets/icons";
+import {productCardProps} from "../../../interface/redux/variable.interface.ts";
+import {LikeIcon} from "../../../assets/icons";
 import {Link} from "react-router-dom";
 
 export default function Component({image, id, name, price}: productCardProps) {
