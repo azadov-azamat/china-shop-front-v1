@@ -13,7 +13,7 @@ export default function Component() {
     return (
         <header className={'w-100 flex justify-between items-center mt-10 mb-5'}>
             <h2 className={'font-bold text-xl'}>UzChinaShop</h2>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center !gap-4">
                 <NotificationComponent value={5} isActive={false}/>
                 <BucketComponent value={carts.length} isActive/>
                 <Link to={'/favorite'}>

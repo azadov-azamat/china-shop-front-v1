@@ -12,7 +12,7 @@ export default function Component({image, id, name, price}: productCardProps) {
                 <div className={'w-full h-[130px] max-350:h-[170px] object-center object-contain flex justify-center items-center'}>
                     <img src={image} alt={name} className="rounded-lg w-4/5 h-full"/>
                 </div>
-                <button className="absolute top-4 right-2 p-2">
+                <button className="absolute bg-transparent top-4 right-2 p-2">
                     <LikeIcon/>
                 </button>
             </div>

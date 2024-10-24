@@ -40,14 +40,14 @@ export default function Component({image, id, name, price, quantity, brand, isRo
             {!isRoute ? <div className="flex items-end h-full">
                 <button
                     onClick={handleDecrease}
-                    className="border rounded-l px-3 "
+                    className="border rounded-l bg-transparent px-3 "
                 >
                     -
                 </button>
                 <span className="border-t border-b px-4">{quantity}</span>
                 <button
                     onClick={handleIncrease}
-                    className="border rounded-r px-3 "
+                    className="border rounded-r bg-transparent px-3 "
                 >
                     +
                 </button>
@@ -60,7 +60,7 @@ export default function Component({image, id, name, price, quantity, brand, isRo
             </div>}
             {!isRoute ? <button
                 onClick={handleRemove}
-                className="absolute top-5 right-5"
+                className="absolute top-5 bg-transparent right-5"
             >
                 <DismissIcon/>
             </button> : <Link

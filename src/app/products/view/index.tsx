@@ -65,12 +65,12 @@ export default function Controller() {
 
                     <div className="w-full flex justify-between items-center mt-4">
                         <div className="flex items-center">
-                            <button onClick={() => handleQuantityChange(-1)} className="border rounded-l px-3 ">
+                            <button onClick={() => handleQuantityChange(-1)} className="border bg-transparent rounded-l px-3 ">
                                 -
                             </button>
                             <span className="border-t border-b px-4">{quantity}</span>
                             <button disabled={quantity === product.stockQuantity}
-                                    onClick={() => handleQuantityChange(1)} className="border rounded-r px-3 ">
+                                    onClick={() => handleQuantityChange(1)} className="border bg-transparent rounded-r px-3 ">
                                 +
                             </button>
                         </div>
@@ -90,7 +90,7 @@ export default function Controller() {
                                 <>
                                     {product.description}{' '}
                                     <button
-                                        className="text-primary-blurple font-[Lato] font-medium text-[12px] leading-[19px]"
+                                        className="text-primary-blurple font-[Lato] font-medium text-[12px] bg-transparent leading-[19px]"
                                         onClick={() => setIsExpanded(!isExpanded)}
                                     >
                                         less
@@ -100,7 +100,7 @@ export default function Controller() {
                                 <>
                                     {shortDescription}{' '}
                                     <button
-                                        className="text-primary-blurple font-[Lato] font-medium text-[12px] leading-[19px]"
+                                        className="text-primary-blurple bg-transparent font-[Lato] font-medium text-[12px] leading-[19px]"
                                         onClick={() => setIsExpanded(!isExpanded)}
                                     >
                                         detail
