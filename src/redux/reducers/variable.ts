@@ -33,7 +33,7 @@ const initialState: InitialStateProps = {
             availableColors: ['Purple', 'Black', 'Gray'], // Mavjud ranglar
             sizes: ['S', 'M', 'L', 'XL', 'XXL'], // Mavjud o'lchamlar
             selectedSize: 'S', // Hozirgi tanlangan o'lcham
-            stockQuantity: 100, // Umumiy miqdor
+            stockQuantity: 6, // Umumiy miqdor
         },
         {
             id: 2,
