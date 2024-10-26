@@ -1,7 +1,7 @@
 import {
-    CartController, FavoriteController,
+    CartController, ErrorPaymentController, FavoriteController,
     IndexController,
-    ProductPreviewController, SearchController
+    ProductPreviewController, SearchController, SuccessPaymentController
 } from '../app/index';
 
 
@@ -35,5 +35,17 @@ export const routes = [
         name: 'favorite page',
         path: '/favorite',
         component: FavoriteController
+    },
+    {
+        id: 6,
+        name: 'success payment page',
+        path: '/success-payment',
+        component: SuccessPaymentController
+    },
+    {
+        id: 7,
+        name: 'error payment page',
+        path: '/error-payment',
+        component: ErrorPaymentController
     }
 ]
