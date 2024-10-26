@@ -24,7 +24,7 @@ export default function Component() {
                     onClick={() => setActiveTab(tab.value)}
                     className={`relative bg-transparent flex items-start pb-2 ${
                         activeTab === tab.value
-                            ? 'text-purple-600 font-semibold after:content-[""] after:absolute after:left-1/2 after:transform ' +
+                            ? 'text-purple-600 font-semibold after:content-[""] after:absolute after:left-[13px] after:transform ' +
                             'after:-translate-x-1/2 after:bottom-0 after:h-[4px] after:w-6 after:bg-purple-600 after:rounded-full'
                             : 'text-gray-600 font-medium'
                     }`}
