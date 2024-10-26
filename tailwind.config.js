@@ -6,6 +6,9 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                'sans': ['Lato', 'sans-serif'],
+            },
             colors: {
                 "primary-blurple": "#6342E7",
                 "primary-blurple-dark": "#472CB6",
