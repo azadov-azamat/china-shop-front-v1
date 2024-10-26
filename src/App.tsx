@@ -20,6 +20,12 @@ import './utils/i18n.ts';
 import i18n from "./utils/i18n.ts";
 import {useTranslation} from "react-i18next";
 
+declare global {
+    interface Window {
+        Telegram: any;
+    }
+}
+
 function App() {
 
     const {t} = useTranslation()
@@ -30,7 +36,11 @@ function App() {
         updateTitle()
     });
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.expand();
+        }
+
         updateTitle();
 
         return () => {
