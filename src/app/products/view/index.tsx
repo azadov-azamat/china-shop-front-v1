@@ -38,7 +38,7 @@ export default function Controller() {
                             <ArrowLeftIcon />
                         </button>
 
-                        <div className={'p-4 bg-white rounded-full'}>
+                        <div className={'w-12 h-12 flex items-center justify-center bg-white rounded-full'}>
                             <LikeIcon />
                         </div>
                     </div>
