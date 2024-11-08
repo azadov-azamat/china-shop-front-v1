@@ -1,9 +1,16 @@
 import {FilterRowSection, HeaderSection, ProductCardComponent, TopMenuSection} from "../../components"
-import {useAppSelector} from "../../redux/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
+import React from "react";
+import {getCategories} from "../../redux/reducers/variable.ts";
 
 export default function Controller() {
 
+    const dispatch = useAppDispatch();
     const {products} = useAppSelector(state => state.variables)
+
+    React.useLayoutEffect(()=>{
+        dispatch(getCategories())
+    }, [])
 
     return (
         <>

@@ -1,6 +1,7 @@
 export interface InitialStateProps {
     loading: boolean;
     subscribeLoading: boolean;
+    categories: categoryDataProps[] | [];
     product: productCardProps | null;
     products: productCardProps[] | [];
     carts: cartCardProps[] | [];
@@ -13,15 +14,20 @@ export interface InitialStateProps {
 export interface cartCardProps extends productCardProps{
     quantity: number;
 }
+
+export interface categoryDataProps extends defaultKeys{
+    name: string;
+}
+
 export interface productCardProps extends defaultKeys{
-    image: string;
+    category: number;
     name: string;
     price: number;
+    size: string;
     description: string;
-    brand: string;
-    rating: number;
+    image: string;
+    count: number;
     availableColors: string[]; // Mavjud ranglar (massiv shaklida)
-    sizes: string[]; // Mavjud o'lchamlar (massiv shaklida)
     selectedSize: string; // Hozirgi tanlangan o'lcham
     stockQuantity: number; // Omborda mavjud miqdor
 }

@@ -5,31 +5,27 @@
 // } from "../icons"
 
 import React from "react";
-
-const tabs = [
-    { label: 'Popular', value: 'popular' },
-    { label: 'Mens', value: 'mens' },
-    { label: 'Womens', value: 'womens' },
-    { label: 'Sale', value: 'sale' },
-];
+import {useAppSelector} from "../../redux/hooks.ts";
 
 export default function Component() {
-    const [activeTab, setActiveTab] = React.useState(tabs[0].value);
+
+    const {categories} = useAppSelector(state => state.variables)
+    const [activeTab, setActiveTab] = React.useState(categories[0]?.id);
 
     return (
         <div className="flex space-x-8 justify-between items-center border-b border-gray-300">
-            {tabs.map((tab) => (
+            {categories.map((category) => (
                 <button
-                    key={tab.value}
-                    onClick={() => setActiveTab(tab.value)}
+                    key={category.id}
+                    onClick={() => setActiveTab(category.id)}
                     className={`relative bg-transparent flex items-start pb-2 ${
-                        activeTab === tab.value
+                        activeTab === category.id
                             ? 'text-purple-600 font-semibold after:content-[""] after:absolute after:left-[13px] after:transform ' +
                             'after:-translate-x-1/2 after:bottom-0 after:h-[4px] after:w-6 after:bg-purple-600 after:rounded-full'
                             : 'text-gray-600 font-medium'
                     }`}
                 >
-                    {tab.label}
+                    {category.name}
                 </button>
             ))}
         </div>
