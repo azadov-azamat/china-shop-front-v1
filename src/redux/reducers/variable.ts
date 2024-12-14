@@ -8,9 +8,39 @@ import img3 from '../../assets/draft/img_3.png';
 import img4 from '../../assets/draft/img_4.png';
 import {http} from "../../config/api.ts";
 
+let csrfToken: string | null = null;
+export const login = createAsyncThunk('variables/login', async (data: string, {rejectWithValue}) => {
+    try {
+        const response = await http.get(`/login`, {
+            params: {
+                userid: data
+            }
+        })
+        console.log("response.headers", response)
+        const setCookieHeader = response.headers["set-cookie"];
+        if (setCookieHeader) {
+            const cookies = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader];
+            const csrfCookie = cookies.find((cookie: string) => cookie.startsWith("csrftoken="));
+            if (csrfCookie) {
+                csrfToken = csrfCookie.split("=")[1].split(";")[0]; // Extract the token
+            }
+        }
+
+        if (csrfToken) {
+            console.log("CSRF Token:", csrfToken);
+        } else {
+            console.warn("CSRF Token not found.");
+        }
+        if (response.data === null) return rejectWithValue(response?.data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+});
+
 export const getCategories = createAsyncThunk('variables/getCategories', async (_, {rejectWithValue}) => {
     try {
-        const response = await http.get(`/category`)
+        const response = await http.get(`/categories`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
