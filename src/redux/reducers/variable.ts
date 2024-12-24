@@ -7,6 +7,7 @@ import img2 from '../../assets/draft/img_2.png';
 import img3 from '../../assets/draft/img_3.png';
 import img4 from '../../assets/draft/img_4.png';
 import {http} from "../../config/api.ts";
+import {deserialize} from "../../utils/general.ts";
 
 export const getCategories = createAsyncThunk('variables/getCategories', async (_, {rejectWithValue}) => {
     try {
@@ -42,7 +43,7 @@ export const getProducts = createAsyncThunk('variables/getProducts', async (_, {
     try {
         const response = await http.get(`/products`)
         if (response.data === null) return rejectWithValue(response?.data)
-        return response.data
+        return await deserialize(response.data)
     } catch (error) {
         return rejectWithValue(error)
     }

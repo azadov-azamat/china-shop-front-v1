@@ -36,7 +36,7 @@ function App() {
     const [loading, setLoading] = React.useState(load);
 
     i18n.on('languageChanged', () => {
-        setLoading(true);
+        // setLoading(true);
         updateTitle()
     });
 
@@ -64,6 +64,7 @@ function App() {
     const updateTitle = () => {
         document.title = t('app.title');
         document.documentElement.lang = i18n.language;
+        setLoading(false)
     };
 
     return (

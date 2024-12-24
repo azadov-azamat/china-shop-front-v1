@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import {useAppDispatch} from "../redux/hooks.ts";
 import {getUserMe, login} from "../redux/reducers/auth.ts";
 import {UserDataProps} from "../interface/redux/auth.interface.ts";
+import i18n from "../utils/i18n.ts";
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -23,12 +24,17 @@ const useAuth = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const local = localStorage.getItem('authenticate') || ""
+        const local = localStorage.getItem('authenticate') || "{}"
         const { id } = JSON.parse(local);
         const telegramId = searchParams.get("telegramId") || id;
+        const lang = searchParams.get("lang") || 'ru';
+
+        i18n.changeLanguage(lang).catch((error) => {
+            console.error("Tilni sozlashda xatolik:", error);
+        });
 
         if (telegramId) {
-            setAuthState((prev) => ({ ...prev, loading: true }));
+            setAuthState((prev) => ({ ...prev, load: true }));
 
             dispatch(login(String(telegramId)))
                 .unwrap()
