@@ -19,6 +19,7 @@ import './utils/i18n.ts';
 
 import i18n from "./utils/i18n.ts";
 import {useTranslation} from "react-i18next";
+import useAuth from "./hooks/auth.ts";
 
 declare global {
     interface Window {
@@ -29,7 +30,10 @@ declare global {
 function App() {
 
     const {t} = useTranslation()
-    const [loading, setLoading] = React.useState(false);
+    // const dispatch = useAppDispatch();
+    const { load } = useAuth();
+
+    const [loading, setLoading] = React.useState(load);
 
     i18n.on('languageChanged', () => {
         setLoading(true);

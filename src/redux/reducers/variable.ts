@@ -8,25 +8,6 @@ import img3 from '../../assets/draft/img_3.png';
 import img4 from '../../assets/draft/img_4.png';
 import {http} from "../../config/api.ts";
 
-export const login = createAsyncThunk('variables/login', async (data: any, {rejectWithValue}) => {
-    try {
-        const response = await http.get(`/login`, {
-            params: data
-        })
-        const authorizationHeader = response.headers.authorization;
-
-        if (authorizationHeader) {
-            console.log(`Authorization Header: ${authorizationHeader}`);
-        } else {
-            console.log('Authorization header not found.');
-        }
-        if (response.data === null) return rejectWithValue(response?.data)
-        return response.data
-    } catch (error) {
-        return rejectWithValue(error)
-    }
-});
-
 export const getCategories = createAsyncThunk('variables/getCategories', async (_, {rejectWithValue}) => {
     try {
         const response = await http.get(`/categories`)
@@ -218,7 +199,5 @@ export const variableSlice = createSlice({
     }
 })
 
-export const {
-
-} = variableSlice.actions;
+export const {} = variableSlice.actions;
 export default variableSlice.reducer
