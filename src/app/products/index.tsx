@@ -1,7 +1,7 @@
 import {FilterRowSection, HeaderSection, ProductCardComponent, TopMenuSection} from "../../components"
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import React from "react";
-import {getCategories, login} from "../../redux/reducers/variable.ts";
+import {getCategories, getProducts, login} from "../../redux/reducers/variable.ts";
 import {useSearchParams} from "react-router-dom";
 import {unwrapResult} from "@reduxjs/toolkit";
 import axios from "axios";
@@ -15,16 +15,18 @@ export default function Controller() {
     const {products} = useAppSelector(state => state.variables)
 
     const userId = searchParams.get("userId");
+    const name = searchParams.get("name");
+    const phone = searchParams.get("p-n");
+    const phone2 = searchParams.get("p-n2");
 
-    async function fetch() {
-        const response = await axios.get(`${baseUrl}/login?userid=${userId}`)
-        const cookies = response.headers["Set-Cookie"];
-        console.log(cookies);
-    }
     React.useLayoutEffect(() => {
-        fetch()
-        // dispatch(login(String(userId))).then(unwrapResult).then(()=> {
-        //     dispatch(getCategories())
+        // dispatch(login({
+        //     'tg-id': userId,
+        //     name,
+        //     'p-n': phone,
+        //     'p-n2': phone2
+        // })).then(unwrapResult).then(() => {
+            dispatch(getProducts())
         // })
     }, [])
 

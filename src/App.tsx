@@ -37,8 +37,17 @@ function App() {
     });
 
     React.useEffect(() => {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.expand();
+        if (window && window.Telegram?.WebApp.platform !== 'unknown') {
+            if (window.Telegram.WebApp.requestFullscreen) {
+                window.Telegram.WebApp.requestFullscreen();
+                window.Telegram.WebApp.expand();
+            } else {
+                window.Telegram.WebApp.expand();
+            }
+
+            if (window.Telegram.WebApp.isVerticalSwipesEnabled) {
+                window.Telegram.WebApp.disableVerticalSwipes();
+            }
         }
 
         updateTitle();

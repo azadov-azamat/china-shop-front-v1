@@ -8,28 +8,17 @@ import img3 from '../../assets/draft/img_3.png';
 import img4 from '../../assets/draft/img_4.png';
 import {http} from "../../config/api.ts";
 
-let csrfToken: string | null = null;
-export const login = createAsyncThunk('variables/login', async (data: string, {rejectWithValue}) => {
+export const login = createAsyncThunk('variables/login', async (data: any, {rejectWithValue}) => {
     try {
         const response = await http.get(`/login`, {
-            params: {
-                userid: data
-            }
+            params: data
         })
-        console.log("response.headers", response)
-        const setCookieHeader = response.headers["set-cookie"];
-        if (setCookieHeader) {
-            const cookies = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader];
-            const csrfCookie = cookies.find((cookie: string) => cookie.startsWith("csrftoken="));
-            if (csrfCookie) {
-                csrfToken = csrfCookie.split("=")[1].split(";")[0]; // Extract the token
-            }
-        }
+        const authorizationHeader = response.headers.authorization;
 
-        if (csrfToken) {
-            console.log("CSRF Token:", csrfToken);
+        if (authorizationHeader) {
+            console.log(`Authorization Header: ${authorizationHeader}`);
         } else {
-            console.warn("CSRF Token not found.");
+            console.log('Authorization header not found.');
         }
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
@@ -70,7 +59,7 @@ export const getNotifications = createAsyncThunk('variables/getNotifications', a
 
 export const getProducts = createAsyncThunk('variables/getProducts', async (_, {rejectWithValue}) => {
     try {
-        const response = await http.get(`/product`)
+        const response = await http.get(`/products`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
