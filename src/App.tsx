@@ -42,12 +42,12 @@ function App() {
 
     React.useEffect(() => {
         if (window && window.Telegram?.WebApp.platform !== 'unknown') {
-            if (window.Telegram.WebApp.requestFullscreen) {
-                window.Telegram.WebApp.requestFullscreen();
+            // if (window.Telegram.WebApp.requestFullscreen) {
+            //     // window.Telegram.WebApp.requestFullscreen();
+            //     window.Telegram.WebApp.expand();
+            // } else {
                 window.Telegram.WebApp.expand();
-            } else {
-                window.Telegram.WebApp.expand();
-            }
+            // }
 
             if (window.Telegram.WebApp.isVerticalSwipesEnabled) {
                 window.Telegram.WebApp.disableVerticalSwipes();

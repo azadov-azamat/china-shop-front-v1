@@ -20,16 +20,12 @@ export interface categoryDataProps extends defaultKeys{
 }
 
 export interface productCardProps extends defaultKeys{
-    category: number;
     name: string;
     price: number;
-    size: string;
+    sizes: string[];
     description: string;
-    image: string;
-    count: number;
-    availableColors: string[]; // Mavjud ranglar (massiv shaklida)
-    selectedSize: string; // Hozirgi tanlangan o'lcham
-    stockQuantity: number; // Omborda mavjud miqdor
+    media: any;
+    amount: number; // Omborda mavjud miqdor
 }
 
 

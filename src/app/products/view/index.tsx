@@ -1,25 +1,28 @@
 import {useParams, useNavigate} from 'react-router-dom';
-import {useAppSelector} from "../../../redux/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
 import React from "react";
 import {ArrowLeftIcon, BucketIcon, CheckIcon, LikeIcon, UploadIcon} from "../../../assets/icons";
-import {StarRatingComponent} from "../../../components";
+// import {StarRatingComponent} from "../../../components";
+import {getProductById} from "../../../redux/reducers/variable.ts";
 
 export default function Controller() {
     const {id} = useParams<{ id: string; }>();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const productId = parseInt(String(id));
-    const {products} = useAppSelector(state => state.variables)
-    const product = products.find((p) => p.id === productId); // Mahsulotni topamiz
+    const { product} = useAppSelector(state => state.variables)
 
     const [isExpanded, setIsExpanded] = React.useState(false); // Tavsif qisqartirilganmi yoki to'liqmi
     const [quantity, setQuantity] = React.useState(1); // Miqdor holati
-    const [selectedSize, setSelectedSize] = React.useState(product?.selectedSize || ''); // Tanlangan o'lcham
+    const [selectedSize, setSelectedSize] = React.useState('');
 
-    if (!product) {
-        return <div>Mahsulot topilmadi</div>;
+    React.useLayoutEffect(()=> {
+    if (productId) {
+        dispatch(getProductById(String(productId)))
     }
+    }, [productId])
 
-    const shortDescription = product.description.slice(0, 150) + '...'; // 150 ta belgi
+    const shortDescription = product?.description.slice(0, 150) + '...'; // 150 ta belgi
 
     const handleQuantityChange = (delta: number) => {
         setQuantity((prevQuantity) => Math.max(1, prevQuantity + delta));
@@ -28,8 +31,10 @@ export default function Controller() {
     const handleBack = () => {
         navigate(-1);
     };
-
-    return (
+    console.log(product)
+    return !product ? (
+        <div>Mahsulot topilmadi</div>
+    ) : (
         <div className="bg-primary-amber rounded-lg shadow-md relative h-screen">
             <div className={'sticky top-0 z-10 w-full h-md:h-[50vh] h-[40vh] flex justify-center items-center'}>
                 <div className="absolute top-10 left-2 right-2 z-20">
@@ -44,7 +49,7 @@ export default function Controller() {
                     </div>
                 </div>
 
-                <img src={product.image} alt={product.name} className="h-md2:w-1/2 w-1/3 h-auto object-cover rounded-lg z-0" />
+                {/*<img src={product?.media?['path']} alt={product.name} className="h-md2:w-1/2 w-1/3 h-auto object-cover rounded-lg z-0" />*/}
             </div>
 
             {/* Mahsulot tafsilotlari */}
@@ -52,9 +57,8 @@ export default function Controller() {
                 <div className="mt-4 relative w-full h-full flex flex-col justify-between">
                     <div className="flex justify-between items-center">
                         <div className="flex flex-col">
-                            <h2 className="text-xs font-medium">{product.brand}</h2>
                             <h1 className="text-2xl font-semibold">{product.name}</h1>
-                            <StarRatingComponent rating={product.rating}/>
+                            {/*<StarRatingComponent rating={product.rating}/>*/}
                         </div>
                         <p className="font-semibold flex items-end">
                             <span className="text-xl font-bold">${product.price.toFixed(0)}</span>
@@ -69,7 +73,7 @@ export default function Controller() {
                                 -
                             </button>
                             <span className="border-t border-b px-4">{quantity}</span>
-                            <button disabled={quantity === product.stockQuantity}
+                            <button disabled={quantity === product.amount}
                                     onClick={() => handleQuantityChange(1)} className="border bg-transparent rounded-r px-3 ">
                                 +
                             </button>

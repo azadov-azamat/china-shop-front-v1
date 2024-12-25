@@ -18,6 +18,7 @@
     "i18next-http-backend": "^2.6.2",
     "jsonapi-serializer": "^3.6.9",
     "process": "^0.11.10",
+    "qs": "^6.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^15.1.0",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@eslint/js": "^9.11.1",
     "@types/jsonapi-serializer": "^3.6.8",
+    "@types/qs": "^6.9.17",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@types/smoothscroll-polyfill": "^0.3.4",
