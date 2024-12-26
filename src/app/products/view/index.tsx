@@ -2,9 +2,10 @@ import {useParams, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
 import React from "react";
 import {ArrowLeftIcon, BucketIcon, CheckIcon, LikeIcon, UploadIcon} from "../../../assets/icons";
-import {createLike, deleteLike, getProductById} from "../../../redux/reducers/variable.ts";
+import {deleteLike, getProductById} from "../../../redux/reducers/variable.ts";
 import Loading from "../../../components/loading";
 import {createBuckets} from "../../../redux/reducers/bucket.ts";
+import {createLike} from "../../../redux/reducers/like.ts";
 
 export default function Controller() {
     const {id} = useParams<{ id: string; }>();

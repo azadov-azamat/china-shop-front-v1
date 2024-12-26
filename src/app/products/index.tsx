@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {getProducts} from "../../redux/reducers/variable.ts";
 import {useLocation} from "react-router-dom";
 import qs from 'qs';
-import {getBucketCount} from "../../redux/reducers/bucket.ts";
+import {getBucketCount} from "../../redux/reducers/bucket";
 
 export default function Controller() {
 
@@ -28,9 +28,11 @@ export default function Controller() {
         }
     }, [auth, location.search]);
 
-    React.useEffect(()=>{
-        dispatch(getBucketCount())
-    }, []);
+    React.useEffect(() => {
+        if (auth) {
+            dispatch(getBucketCount())
+        }
+    }, [auth]);
 
     return (
         <>

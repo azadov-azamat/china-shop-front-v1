@@ -4,7 +4,7 @@ import {productCardProps} from "../../../interface/redux/variable.interface.ts";
 import {LikeIcon} from "../../../assets/icons";
 import {Link} from "react-router-dom";
 
-export default function Component({media, id, name, price}: productCardProps) {
+export default function Component({media, id, name, like, price}: productCardProps) {
     return (
         <Link to={'/product/' + id} className="relative text-center max-350:w-full">
             <div
@@ -13,7 +13,7 @@ export default function Component({media, id, name, price}: productCardProps) {
                     <img src={media[0]?.path} alt={name} className="rounded-lg w-4/5 h-full"/>
                 </div>
                 <button className="absolute bg-transparent top-4 right-2 p-2">
-                    <LikeIcon/>
+                    <LikeIcon like={like ? like.liked : false}/>
                 </button>
             </div>
             <h3

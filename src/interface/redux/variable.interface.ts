@@ -1,5 +1,5 @@
 import {mediaDataProps} from "./media.interface.ts";
-import {UserDataProps} from "./auth.interface.ts";
+import {likeDataProps} from "./like.interface.ts";
 
 export interface InitialStateProps {
     loading: boolean;
@@ -16,12 +16,6 @@ export interface InitialStateProps {
 
 export interface cartCardProps extends productCardProps{
     quantity: number;
-}
-
-export interface likeDataProps extends defaultKeys{
-    liked: boolean;
-    owner?: UserDataProps | null;
-    product: productCardProps | null;
 }
 
 export interface productCardProps extends defaultKeys{

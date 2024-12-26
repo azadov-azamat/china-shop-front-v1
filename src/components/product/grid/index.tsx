@@ -14,7 +14,7 @@ interface component extends bucketProps {
     isRoute?: boolean;
 }
 
-export default function Component({product, count, id, isRoute = false}: component) {
+export default function Component({product, count, size, id, isRoute = false}: component) {
 
     const dispatch = useAppDispatch();
     const [quantity, setQuantity] = React.useState(count);
@@ -22,7 +22,7 @@ export default function Component({product, count, id, isRoute = false}: compone
     const debounceUpdate = React.useCallback(
         _debounce(async () => {
             if (id) {
-                await dispatch(updateBuckets({ id, count: quantity, product }));
+                await dispatch(updateBuckets({id, count: quantity, product, size}));
             }
         }, 500),
         [id, quantity, product]

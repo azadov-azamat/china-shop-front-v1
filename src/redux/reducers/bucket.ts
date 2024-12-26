@@ -130,7 +130,7 @@ export const bucketSlice = createSlice({
         })
 
         builder.addCase(getBucketCount.fulfilled, (state: BucketInitialStateProps, action) => {
-            state.totalCount = action.payload
+            state.totalCount = action.payload.count
         })
     }
 })
