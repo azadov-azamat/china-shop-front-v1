@@ -4,6 +4,8 @@ import {
     ProductPreviewController, SearchController, SuccessPaymentController
 } from '../app/index';
 
+export const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
+export const CATEGORIES = ['Popular', 'Men', 'Women', 'Sale'];
 
 export const routes = [
     {

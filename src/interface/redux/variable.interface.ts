@@ -1,3 +1,5 @@
+import {mediaDataProps} from "./media.interface.ts";
+
 export interface InitialStateProps {
     loading: boolean;
     subscribeLoading: boolean;
@@ -24,7 +26,7 @@ export interface productCardProps extends defaultKeys{
     price: number;
     sizes: string[];
     description: string;
-    media: any;
+    media: mediaDataProps[] | [];
     amount: number; // Omborda mavjud miqdor
 }
 

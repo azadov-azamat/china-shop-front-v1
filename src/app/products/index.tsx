@@ -11,17 +11,20 @@ export default function Controller() {
     const location = useLocation()
 
     const {products} = useAppSelector(state => state.variables)
+    const {auth} = useAppSelector(state => state.auth)
     const query = qs.parse(location.search, {ignoreQueryPrefix: true})
 
     React.useLayoutEffect(() => {
-        if (location.search && !query?.telegramId && !query?.lang) {
-            dispatch(getProducts({...query}))
-        } else {
-            dispatch(getProducts({}))
+        if (auth) {
+            if (location.search && !query?.telegramId && !query?.lang) {
+                dispatch(getProducts({...query}))
+            } else {
+                dispatch(getProducts({}))
+            }
         }
-    }, [location.search]);
+    }, [auth, location.search]);
 
-
+    console.log(products)
     return (
         <>
             <div className={'mx-3'}>
