@@ -1,6 +1,6 @@
 import {
     CartController, ErrorPaymentController, FavoriteController,
-    IndexController,
+    IndexController, PaymentController,
     ProductPreviewController, SearchController, SuccessPaymentController
 } from '../app/index';
 
@@ -49,5 +49,11 @@ export const routes = [
         name: 'error payment page',
         path: '/error-payment',
         component: ErrorPaymentController
+    },
+    {
+        id: 8,
+        name: 'payment page',
+        path: '/payment/:orderId',
+        component: PaymentController
     }
 ]

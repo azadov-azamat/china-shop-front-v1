@@ -36,7 +36,7 @@ export default function Controller() {
             </div>
 
             <div className="fixed bottom-0 left-0 right-0 bg-white py-6 px-3">
-                <button onClick={() => navigate('/success-payment')} className="relative uppercase bg-primary-blurple text-xs text-white w-full py-4 rounded-[90px] flex justify-center
+                <button onClick={() => navigate('/payment/3')} className="relative uppercase bg-primary-blurple text-xs text-white w-full py-4 rounded-[90px] flex justify-center
                 items-center gap-4">
                     <ExitIcon/>
                     GO TO CHECKOUt
