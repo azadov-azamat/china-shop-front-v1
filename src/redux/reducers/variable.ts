@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {InitialStateProps} from "../../interface/redux/variable.interface";
+import {InitialStateProps, likeDataProps, productCardProps} from "../../interface/redux/variable.interface";
 
 import {http} from "../../config/api.ts";
 import {deserialize} from "../../utils/general.ts";
@@ -37,9 +37,19 @@ export const getProductById = createAsyncThunk('variables/getProductById', async
     }
 });
 
-export const createLikedProduct = createAsyncThunk('variables/createLikedProduct', async (productId: string, {rejectWithValue}) => {
+export const createLike = createAsyncThunk('variables/createLike', async (data: likeDataProps, {rejectWithValue}) => {
     try {
-        const response = await http.post(`/products/like/${productId}`)
+        const response = await http.post(`/likes`, data)
+        if (response.data === null) return rejectWithValue(response?.data)
+        return await deserialize(response.data)
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+});
+
+export const deleteLike = createAsyncThunk('variables/deleteLike', async (id: number, {rejectWithValue}) => {
+    try {
+        const response = await http.delete(`/likes/${id}`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
@@ -100,6 +110,13 @@ export const variableSlice = createSlice({
             console.error(action.payload)
             state.product = null
             state.loading = true;
+        })
+
+        builder.addCase(deleteLike.fulfilled, (state: InitialStateProps) => {
+            state.product = {
+                ...state.product,
+                like: null
+            } as productCardProps
         })
     }
 })

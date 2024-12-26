@@ -16,6 +16,15 @@ export const getBuckets = createAsyncThunk('bucket/getBuckets', async (data: Url
         return rejectWithValue(error)
     }
 });
+export const getBucketCount = createAsyncThunk('bucket/getCount', async (_, {rejectWithValue}) => {
+    try {
+        const response = await http.get(`/buckets/count`)
+        if (response.data === null) return rejectWithValue(response?.data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+});
 
 export const createBuckets = createAsyncThunk('bucket/createBuckets', async (data: bucketProps, {rejectWithValue}) => {
     try {
@@ -118,6 +127,10 @@ export const bucketSlice = createSlice({
         builder.addCase(deleteBuckets.rejected, (state: BucketInitialStateProps, action) => {
             console.error(action.payload)
             state.loading = true;
+        })
+
+        builder.addCase(getBucketCount.fulfilled, (state: BucketInitialStateProps, action) => {
+            state.totalCount = action.payload
         })
     }
 })

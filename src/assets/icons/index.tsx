@@ -20,8 +20,8 @@ export const BucketIcon = ({size = 24, color = "black"}: { size?: number; color?
     )
 }
 
-export const LikeIcon = () => {
-    const [liked, setLiked] = React.useState(false); // Like bo'lsa true, aks holda false
+export const LikeIcon = ({like = false}) => {
+    const [liked, setLiked] = React.useState(like); // Like bo'lsa true, aks holda false
 
     const toggleLike = () => {
         setLiked(!liked);

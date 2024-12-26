@@ -2,8 +2,7 @@ import {useParams, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
 import React from "react";
 import {ArrowLeftIcon, BucketIcon, CheckIcon, LikeIcon, UploadIcon} from "../../../assets/icons";
-// import {StarRatingComponent} from "../../../components";
-import {getProductById} from "../../../redux/reducers/variable.ts";
+import {createLike, deleteLike, getProductById} from "../../../redux/reducers/variable.ts";
 import Loading from "../../../components/loading";
 import {createBuckets} from "../../../redux/reducers/bucket.ts";
 
@@ -41,11 +40,22 @@ export default function Controller() {
         }
     }
 
+    async function liked(){
+        if (!product?.id) return;
+
+        if (product.like && product.like.id) {
+            await dispatch(deleteLike(product.like.id))
+        } else {
+            await dispatch(createLike({liked: true, product}))
+        }
+    }
+
     if (loading) {
         return <div className={'w-full h-screen flex items-center justify-center'}>
             <Loading/>
         </div>
     }
+
     return !product ? (
         <div>Mahsulot topilmadi</div>
     ) : (
@@ -57,8 +67,8 @@ export default function Controller() {
                             <ArrowLeftIcon/>
                         </button>
 
-                        <div className={'w-12 h-12 flex items-center justify-center bg-white rounded-full'}>
-                            <LikeIcon/>
+                        <div className={'w-12 h-12 flex items-center justify-center bg-white rounded-full'} onClick={liked}>
+                            <LikeIcon like={product?.like?.liked}/>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {getProducts} from "../../redux/reducers/variable.ts";
 import {useLocation} from "react-router-dom";
 import qs from 'qs';
+import {getBucketCount} from "../../redux/reducers/bucket.ts";
 
 export default function Controller() {
 
@@ -16,15 +17,21 @@ export default function Controller() {
 
     React.useLayoutEffect(() => {
         if (auth) {
-            if (location.search && !query?.telegramId && !query?.lang) {
-                dispatch(getProducts({...query}))
+            if (location.search) {
+                const newQuery = query;
+                delete newQuery.telegramId
+                delete newQuery.lang
+                dispatch(getProducts({...newQuery}))
             } else {
                 dispatch(getProducts({}))
             }
         }
     }, [auth, location.search]);
 
-    console.log(products)
+    React.useEffect(()=>{
+        dispatch(getBucketCount())
+    }, []);
+
     return (
         <>
             <div className={'mx-3'}>

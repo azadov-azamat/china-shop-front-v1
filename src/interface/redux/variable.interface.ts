@@ -20,7 +20,7 @@ export interface cartCardProps extends productCardProps{
 
 export interface likeDataProps extends defaultKeys{
     liked: boolean;
-    owner: UserDataProps | null;
+    owner?: UserDataProps | null;
     product: productCardProps | null;
 }
 
