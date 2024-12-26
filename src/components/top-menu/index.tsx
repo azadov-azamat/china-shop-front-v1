@@ -12,13 +12,18 @@ export default function Component() {
     const [activeTab, setActiveTab] = React.useState<string>(CATEGORIES[0]);
 
     const toQuery = (category: string) => {
-        navigate({
-            search: category === 'Popular' ? "" : qs.stringify({
-                ...query,
-                category
+        if (category === 'Popular') {
+            navigate({
+                search: ''
             })
-        })
-
+        } else {
+            navigate({
+                search: qs.stringify({
+                    ...query,
+                    category
+                })
+            })
+        }
         setActiveTab(category)
     }
     return (

@@ -4,22 +4,24 @@ import React from "react";
 import {ArrowLeftIcon, BucketIcon, CheckIcon, LikeIcon, UploadIcon} from "../../../assets/icons";
 // import {StarRatingComponent} from "../../../components";
 import {getProductById} from "../../../redux/reducers/variable.ts";
+import Loading from "../../../components/loading";
+import {createBuckets} from "../../../redux/reducers/bucket.ts";
 
 export default function Controller() {
     const {id} = useParams<{ id: string; }>();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const productId = parseInt(String(id));
-    const { product} = useAppSelector(state => state.variables)
+    const {product, loading} = useAppSelector(state => state.variables)
 
     const [isExpanded, setIsExpanded] = React.useState(false); // Tavsif qisqartirilganmi yoki to'liqmi
     const [quantity, setQuantity] = React.useState(1); // Miqdor holati
     const [selectedSize, setSelectedSize] = React.useState('');
 
-    React.useLayoutEffect(()=> {
-    if (productId) {
-        dispatch(getProductById(String(productId)))
-    }
+    React.useLayoutEffect(() => {
+        if (productId) {
+            dispatch(getProductById(String(productId)))
+        }
     }, [productId])
 
     const shortDescription = product?.description.slice(0, 150) + '...'; // 150 ta belgi
@@ -31,7 +33,19 @@ export default function Controller() {
     const handleBack = () => {
         navigate(-1);
     };
-    console.log(product)
+
+    async function getCheckout() {
+        const {payload} = await dispatch(createBuckets({count: quantity, size: selectedSize, product}))
+        if (payload.status !== 500) {
+            navigate('/carts')
+        }
+    }
+
+    if (loading) {
+        return <div className={'w-full h-screen flex items-center justify-center'}>
+            <Loading/>
+        </div>
+    }
     return !product ? (
         <div>Mahsulot topilmadi</div>
     ) : (
@@ -40,20 +54,22 @@ export default function Controller() {
                 <div className="absolute top-10 left-2 right-2 z-20">
                     <div className=" w-full flex justify-between items-center ">
                         <button onClick={handleBack} className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
-                            <ArrowLeftIcon />
+                            <ArrowLeftIcon/>
                         </button>
 
                         <div className={'w-12 h-12 flex items-center justify-center bg-white rounded-full'}>
-                            <LikeIcon />
+                            <LikeIcon/>
                         </div>
                     </div>
                 </div>
 
-                {/*<img src={product?.media?['path']} alt={product.name} className="h-md2:w-1/2 w-1/3 h-auto object-cover rounded-lg z-0" />*/}
+                <img src={product.media[0]?.path} alt={product.name}
+                     className="h-md2:w-1/2 w-1/3 h-auto object-cover rounded-lg z-0"/>
             </div>
 
             {/* Mahsulot tafsilotlari */}
-            <div className="absolute z-10 bottom-0 h-md:!h-auto h-sm-md:min-h-[60vh] p-4 bg-white rounded-t-[40px] shadow-md">
+            <div
+                className="absolute z-10 left-0 right-0 bottom-0 h-md:!h-auto h-sm-md:min-h-[60vh] p-4 bg-white rounded-t-[40px] shadow-md">
                 <div className="mt-4 relative w-full h-full flex flex-col justify-between">
                     <div className="flex justify-between items-center">
                         <div className="flex flex-col">
@@ -69,12 +85,14 @@ export default function Controller() {
 
                     <div className="w-full flex justify-between items-center mt-4">
                         <div className="flex items-center">
-                            <button onClick={() => handleQuantityChange(-1)} className="border bg-transparent rounded-l px-3 ">
+                            <button onClick={() => handleQuantityChange(-1)}
+                                    className="border bg-transparent rounded-l px-3 ">
                                 -
                             </button>
                             <span className="border-t border-b px-4">{quantity}</span>
                             <button disabled={quantity === product.amount}
-                                    onClick={() => handleQuantityChange(1)} className="border bg-transparent rounded-r px-3 ">
+                                    onClick={() => handleQuantityChange(1)}
+                                    className="border bg-transparent rounded-r px-3 ">
                                 +
                             </button>
                         </div>
@@ -83,7 +101,7 @@ export default function Controller() {
                             onClick={() => alert('Share this product!')}
                             className="p-4 flex justify-center items-center bg-gray-100 hover:bg-gray-200 rounded-full"
                         >
-                            <UploadIcon size={20} />
+                            <UploadIcon size={20}/>
                         </button>
                     </div>
 
@@ -134,8 +152,10 @@ export default function Controller() {
                         </div>
                     </div>
 
-                    <button className="mt-6 w-full text-xs bg-primary-blurple flex justify-center items-center gap-4 text-white py-4 rounded-[30px] h-md:mb-0">
-                       <BucketIcon color={'white'}/> ADD TO CART
+                    <button onClick={getCheckout}
+                            disabled={!selectedSize}
+                            className="mt-6 w-full text-xs bg-primary-blurple flex justify-center items-center gap-4 text-white py-4 rounded-[30px] h-md:mb-0">
+                        <BucketIcon color={'white'}/> ADD TO CART
                     </button>
                 </div>
             </div>

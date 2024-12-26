@@ -5,26 +5,6 @@ import {http} from "../../config/api.ts";
 import {deserialize} from "../../utils/general.ts";
 import {UrlParamsDataProps} from "../../interface/search/search.interface.ts";
 
-export const getCategories = createAsyncThunk('variables/getCategories', async (_, {rejectWithValue}) => {
-    try {
-        const response = await http.get(`/categories`)
-        if (response.data === null) return rejectWithValue(response?.data)
-        return response.data
-    } catch (error) {
-        return rejectWithValue(error)
-    }
-});
-
-export const getLikedProducts = createAsyncThunk('variables/getLikedProducts', async (_, {rejectWithValue}) => {
-    try {
-        const response = await http.get(`/liked-products`)
-        if (response.data === null) return rejectWithValue(response?.data)
-        return response.data
-    } catch (error) {
-        return rejectWithValue(error)
-    }
-});
-
 export const getNotifications = createAsyncThunk('variables/getNotifications', async (_, {rejectWithValue}) => {
     try {
         const response = await http.get(`/notifications`)
@@ -80,7 +60,6 @@ export const getOrders = createAsyncThunk('variables/getOrders', async (_, {reje
 const initialState: InitialStateProps = {
     products: [],
     carts: [],
-    categories: [],
     product: null,
     subscribeLoading: false,
     loading: false,
@@ -97,13 +76,6 @@ export const variableSlice = createSlice({
     initialState,
     reducers: reducers,
     extraReducers: (builder) => {
-        builder.addCase(getCategories.fulfilled, (state: InitialStateProps, action) => {
-            state.categories = action.payload
-        })
-        builder.addCase(getCategories.rejected, (state: InitialStateProps, action) => {
-            state.categories = []
-            console.error(action.payload)
-        })
         builder.addCase(getProducts.fulfilled, (state: InitialStateProps, action) => {
             state.products = action.payload
             state.loading = false;
@@ -118,7 +90,6 @@ export const variableSlice = createSlice({
         })
 
         builder.addCase(getProductById.fulfilled, (state: InitialStateProps, action) => {
-            console.log(action.payload)
             state.product = action.payload
             state.loading = false;
         })
