@@ -7,7 +7,7 @@ export interface AuthInitialProps {
 export interface AuthDataProps {
     token: string;
     userId: number;
-    expires: string;
+    // expires: string;
 }
 
 export interface UserDataProps {

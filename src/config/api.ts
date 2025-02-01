@@ -17,7 +17,7 @@ http.interceptors.request.use((config) => {
         try {
             const { token } = JSON.parse(authData);
             if (token) {
-                config.headers['Authorization'] = `Bearer ${token}`;
+                config.headers['Authorization'] = token;
             }
         } catch (error) {
             console.error('Error parsing authentication data:', error);
@@ -44,7 +44,7 @@ export const sendRequest = async (url: string, body: any, method = "POST") => {
                 method,
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': token
                 },
                 body: JSON.stringify(body),
             });

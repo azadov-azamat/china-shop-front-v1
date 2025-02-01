@@ -1,6 +1,3 @@
-import {mediaDataProps} from "./media.interface.ts";
-import {likeDataProps} from "./like.interface.ts";
-
 export interface InitialStateProps {
     loading: boolean;
     subscribeLoading: boolean;
@@ -19,13 +16,20 @@ export interface cartCardProps extends productCardProps{
 }
 
 export interface productCardProps extends defaultKeys{
+    category: 1;
+    description: string;
+    image: string;
+    liked_by_user: boolean;
     name: string;
     price: number;
-    sizes: string[];
-    description: string;
-    media: mediaDataProps[] | [];
-    like: likeDataProps | null;
-    amount: number;
+    sizes: sizesDataProps[];
+    total_count: number;
+}
+
+export interface sizesDataProps extends defaultKeys{
+    count: number;
+    is_available: boolean;
+    size_name: string;
 }
 
 export interface defaultKeys {

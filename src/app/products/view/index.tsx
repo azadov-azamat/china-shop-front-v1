@@ -2,17 +2,18 @@ import {useParams, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
 import React from "react";
 import {ArrowLeftIcon, BucketIcon, CheckIcon, LikeIcon, UploadIcon} from "../../../assets/icons";
-import {deleteLike, getProductById} from "../../../redux/reducers/variable.ts";
+import {getProductById} from "../../../redux/reducers/variable.ts";
 import Loading from "../../../components/loading";
 import {createBuckets} from "../../../redux/reducers/bucket.ts";
-import {createLike} from "../../../redux/reducers/like.ts";
+import {createOrRemoveLike} from "../../../redux/reducers/like.ts";
 
 export default function Controller() {
-    const {id} = useParams<{ id: string; }>();
+    const {id} = useParams<{ id: string}>();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const productId = parseInt(String(id));
     const {product, loading} = useAppSelector(state => state.variables)
+    const {like} = useAppSelector(state => state.like)
 
     const [isExpanded, setIsExpanded] = React.useState(false); // Tavsif qisqartirilganmi yoki to'liqmi
     const [quantity, setQuantity] = React.useState(1); // Miqdor holati
@@ -23,8 +24,8 @@ export default function Controller() {
             dispatch(getProductById(String(productId)))
         }
     }, [productId])
-
-    const shortDescription = product?.description.slice(0, 150) + '...'; // 150 ta belgi
+    const isShort = product?.description && product?.description.length < 150;
+    const shortDescription = product?.description.slice(0, 150) + (isShort ? '...' : ''); // 150 ta belgi
 
     const handleQuantityChange = (delta: number) => {
         setQuantity((prevQuantity) => Math.max(1, prevQuantity + delta));
@@ -44,11 +45,7 @@ export default function Controller() {
     async function liked(){
         if (!product?.id) return;
 
-        if (product.like && product.like.id) {
-            await dispatch(deleteLike(product.like.id))
-        } else {
-            await dispatch(createLike({liked: true, product}))
-        }
+        await dispatch(createOrRemoveLike(product.id))
     }
 
     if (loading) {
@@ -60,57 +57,57 @@ export default function Controller() {
     return !product ? (
         <div>Mahsulot topilmadi</div>
     ) : (
-        <div className="bg-primary-amber rounded-lg shadow-md relative h-screen">
+        <div className="relative h-screen rounded-lg shadow-md bg-primary-amber">
             <div className={'sticky top-0 z-10 w-full h-md:h-[50vh] h-[40vh] flex justify-center items-center'}>
-                <div className="absolute top-10 left-2 right-2 z-20">
-                    <div className=" w-full flex justify-between items-center ">
-                        <button onClick={handleBack} className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+                <div className="absolute z-20 top-10 left-2 right-2">
+                    <div className="flex items-center justify-between w-full ">
+                        <button onClick={handleBack} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200">
                             <ArrowLeftIcon/>
                         </button>
 
                         <div className={'w-12 h-12 flex items-center justify-center bg-white rounded-full'} onClick={liked}>
-                            <LikeIcon like={product?.like?.liked}/>
+                            <LikeIcon like={product?.liked_by_user || like}/>
                         </div>
                     </div>
                 </div>
 
-                <img src={product.media[0]?.path} alt={product.name}
-                     className="h-md2:w-1/2 w-1/3 h-auto object-cover rounded-lg z-0"/>
+                <img src={product.image} alt={product.name}
+                     className="z-0 object-cover w-1/3 h-auto rounded-lg h-md2:w-1/2"/>
             </div>
 
             {/* Mahsulot tafsilotlari */}
             <div
                 className="absolute z-10 left-0 right-0 bottom-0 h-md:!h-auto h-sm-md:min-h-[60vh] p-4 bg-white rounded-t-[40px] shadow-md">
-                <div className="mt-4 relative w-full h-full flex flex-col justify-between">
-                    <div className="flex justify-between items-center">
+                <div className="relative flex flex-col justify-between w-full h-full mt-4">
+                    <div className="flex items-center justify-between">
                         <div className="flex flex-col">
                             <h1 className="text-2xl font-semibold">{product.name}</h1>
                             {/*<StarRatingComponent rating={product.rating}/>*/}
                         </div>
-                        <p className="font-semibold flex items-end">
-                            <span className="text-xl font-bold">${product.price.toFixed(0)}</span>
+                        <p className="flex items-end font-semibold">
+                            <span className="text-xl font-bold">{product.price.toFixed(0)}</span>
                             <span className="text-sm mb-[2px]">.{(product.price % 1).toFixed(2).split('.')[1]}</span>
-                            <span className="text-sm mb-[2px]">&nbsp; USD</span>
+                            {/* <span className="text-sm mb-[2px]">&nbsp; USD</span> */}
                         </p>
                     </div>
 
-                    <div className="w-full flex justify-between items-center mt-4">
+                    <div className="flex items-center justify-between w-full mt-4">
                         <div className="flex items-center">
                             <button onClick={() => handleQuantityChange(-1)}
-                                    className="border bg-transparent rounded-l px-3 ">
+                                    className="px-3 bg-transparent border rounded-l ">
                                 -
                             </button>
-                            <span className="border-t border-b px-4">{quantity}</span>
-                            <button disabled={quantity === product.amount}
+                            <span className="px-4 border-t border-b">{quantity}</span>
+                            <button disabled={quantity === product.total_count}
                                     onClick={() => handleQuantityChange(1)}
-                                    className="border bg-transparent rounded-r px-3 ">
+                                    className="px-3 bg-transparent border rounded-r ">
                                 +
                             </button>
                         </div>
 
                         <button
                             onClick={() => alert('Share this product!')}
-                            className="p-4 flex justify-center items-center bg-gray-100 hover:bg-gray-200 rounded-full"
+                            className="flex items-center justify-center p-4 bg-gray-100 rounded-full hover:bg-gray-200"
                         >
                             <UploadIcon size={20}/>
                         </button>
@@ -119,7 +116,7 @@ export default function Controller() {
                     <div className="mt-4">
                         <h3 className="font-[Lato] font-bold text-[12px] leading-[19px]">DESCRIPTION</h3>
                         <p className="text-gray-600 font-[Lato] font-medium text-[12px] leading-[19px]">
-                            {isExpanded ? (
+                            {isShort ? product.description : isExpanded ? (
                                 <>
                                     {product.description}{' '}
                                     <button
@@ -145,19 +142,19 @@ export default function Controller() {
 
                     <div className="mt-4">
                         <h3 className="font-[Lato] font-bold text-[12px] leading-[19px]">SELECT SIZE</h3>
-                        <div className="flex space-x-2 mt-2">
-                            {product.sizes.map((size) => (
+                        <div className="flex mt-2 space-x-2">
+                            {product.sizes.map((size, key) => (
                                 <button
-                                    key={size}
-                                    onClick={() => setSelectedSize(size)}
+                                    key={key}
+                                    onClick={() => setSelectedSize(size.size_name)}
                                     className={`px-4 py-2 border rounded relative ${
-                                        size === selectedSize ? 'bg-primary-blurple text-white' : 'bg-gray-100 text-gray-600'
+                                        size.size_name === selectedSize ? 'bg-primary-blurple text-white' : 'bg-gray-100 text-gray-600'
                                     }`}
                                 >
-                                    {size === selectedSize && <div className={'absolute top-1 right-1'}>
+                                    {size.size_name === selectedSize && <div className={'absolute top-1 right-1'}>
                                         <CheckIcon/>
                                     </div>}
-                                    {size}
+                                    {size.size_name}
                                 </button>
                             ))}
                         </div>

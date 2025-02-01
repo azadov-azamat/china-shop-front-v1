@@ -5,7 +5,20 @@ import {
 } from '../app/index';
 
 export const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
-export const CATEGORIES = ['Popular', 'Men', 'Women', 'Sale'];
+export const CATEGORIES = [
+    {
+        name: 'all',
+        value: null
+    },
+    {
+        name: 'mens',
+        value: 'mens'
+    },
+    {
+        name: 'womens',
+        value: 'womens'
+    }
+];
 
 export const routes = [
     {

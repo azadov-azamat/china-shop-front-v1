@@ -9,10 +9,10 @@ export default function Component() {
     const navigate = useNavigate()
 
     const query = qs.parse(location.search, {ignoreQueryPrefix: true})
-    const [activeTab, setActiveTab] = React.useState<string>(CATEGORIES[0]);
+    const [activeTab, setActiveTab] = React.useState<{name: string; value: string | null}>(CATEGORIES[0]);
 
-    const toQuery = (category: string) => {
-        if (category === 'Popular') {
+    const toQuery = (category: {name: string; value: string | null}) => {
+        if (!category.value) {
             navigate({
                 search: ''
             })
@@ -20,17 +20,17 @@ export default function Component() {
             navigate({
                 search: qs.stringify({
                     ...query,
-                    category
+                    category_name: category.value
                 })
             })
         }
         setActiveTab(category)
     }
     return (
-        <div className="flex space-x-8 justify-between items-center border-b border-gray-300">
-            {CATEGORIES.map((category) => (
+        <div className="flex items-center justify-between space-x-8 border-b border-gray-300">
+            {CATEGORIES.map((category, key) => (
                 <button
-                    key={category}
+                    key={key}
                     onClick={() => toQuery(category)}
                     className={`relative bg-transparent flex items-start pb-2 ${
                         activeTab === category
@@ -39,7 +39,7 @@ export default function Component() {
                             : 'text-gray-600 font-medium'
                     }`}
                 >
-                    {category}
+                    {category.name}
                 </button>
             ))}
         </div>

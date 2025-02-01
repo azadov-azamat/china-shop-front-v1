@@ -1,3 +1,4 @@
+import { AuthDataProps } from './../../interface/redux/auth.interface';
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {http} from "../../config/api.ts";
@@ -16,7 +17,7 @@ export const getUserMe = createAsyncThunk('auth/getUserMe', async (id: number, {
 
 export const login = createAsyncThunk('auth/login', async (id: string, {rejectWithValue}) => {
     try {
-        const response = await http.get(`/auth/telegram/${id}`)
+        const response = await http.get(`/login?tg-id=${id}`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
@@ -30,16 +31,23 @@ const initialState: AuthInitialProps = {
     loading: false
 }
 
-const reducers = {}
-
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: reducers,
+    reducers: {
+        setAuth: (state, action) => {
+            state.auth = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state: AuthInitialProps, action) => {
+            const token = action.payload['Authorization'] as string
+            const data: AuthDataProps = {
+                token,
+                userId: Number(action?.meta?.arg)
+            };
             state.loading = false;
-            authenticate(state, action.payload, action?.meta?.arg);
+            authenticate(state, data, action?.meta?.arg);
         })
         builder.addCase(login.pending, (state: AuthInitialProps) => {
             state.loading = true;
@@ -59,5 +67,5 @@ export const authSlice = createSlice({
     }
 })
 
-export const {} = authSlice.actions;
+export const {setAuth} = authSlice.actions;
 export default authSlice.reducer

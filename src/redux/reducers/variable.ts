@@ -1,8 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {InitialStateProps, productCardProps} from "../../interface/redux/variable.interface";
+import {InitialStateProps} from "../../interface/redux/variable.interface";
 
 import {http} from "../../config/api.ts";
-import {deserialize} from "../../utils/general.ts";
 import {UrlParamsDataProps} from "../../interface/search/search.interface.ts";
 
 export const getNotifications = createAsyncThunk('variables/getNotifications', async (_, {rejectWithValue}) => {
@@ -21,7 +20,7 @@ export const getProducts = createAsyncThunk('variables/getProducts', async (data
             params: data
         })
         if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
+        return response.data
     } catch (error) {
         return rejectWithValue(error)
     }
@@ -30,16 +29,6 @@ export const getProducts = createAsyncThunk('variables/getProducts', async (data
 export const getProductById = createAsyncThunk('variables/getProductById', async (id: string, {rejectWithValue}) => {
     try {
         const response = await http.get(`/products/${id}`)
-        if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
-    } catch (error) {
-        return rejectWithValue(error)
-    }
-});
-
-export const deleteLike = createAsyncThunk('variables/deleteLike', async (id: number, {rejectWithValue}) => {
-    try {
-        const response = await http.delete(`/likes/${id}`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
@@ -50,6 +39,16 @@ export const deleteLike = createAsyncThunk('variables/deleteLike', async (id: nu
 export const getOrders = createAsyncThunk('variables/getOrders', async (_, {rejectWithValue}) => {
     try {
         const response = await http.get(`/order`)
+        if (response.data === null) return rejectWithValue(response?.data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+});
+
+export const getCategories = createAsyncThunk('variables/getCategories', async (_, {rejectWithValue}) => {
+    try {
+        const response = await http.get(`/categories`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
@@ -100,13 +99,6 @@ export const variableSlice = createSlice({
             console.error(action.payload)
             state.product = null
             state.loading = true;
-        })
-
-        builder.addCase(deleteLike.fulfilled, (state: InitialStateProps) => {
-            state.product = {
-                ...state.product,
-                like: null
-            } as productCardProps
         })
     }
 })

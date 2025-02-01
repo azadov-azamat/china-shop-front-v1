@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {useAppDispatch} from "../redux/hooks.ts";
-import {getUserMe, login} from "../redux/reducers/auth.ts";
+import {login, setAuth} from "../redux/reducers/auth.ts";
 import {UserDataProps} from "../interface/redux/auth.interface.ts";
 import i18n from "../utils/i18n.ts";
 
@@ -25,27 +25,24 @@ const useAuth = () => {
 
     useEffect(() => {
         const local = localStorage.getItem('authenticate') || "{}"
-        const { id } = JSON.parse(local);
-        const telegramId = searchParams.get("telegramId") || id;
+        const { token } = JSON.parse(local);
+        const telegramId = searchParams.get("tg-id") || '5461570887';
         const lang = searchParams.get("lang") || 'ru';
 
         i18n.changeLanguage(lang).catch((error) => {
             console.error("Tilni sozlashda xatolik:", error);
         });
 
-        if (telegramId) {
+        if (!token) {
             setAuthState((prev) => ({ ...prev, load: true }));
 
             dispatch(login(String(telegramId)))
                 .unwrap()
-                .then((res) => {
-                    return dispatch(getUserMe(res.userId)).unwrap();
-                })
-                .then((user) => {
+                .then(() => {
                     setAuthState({
                         isAuthenticated: true,
                         load: false,
-                        user: user,
+                        user: null,
                         error: null,
                     });
                 })
@@ -57,6 +54,8 @@ const useAuth = () => {
                         error: error.message,
                     });
                 });
+        } else if (token) {
+            dispatch(setAuth(JSON.parse(local)))
         }
     }, [searchParams]);
 

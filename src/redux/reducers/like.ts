@@ -1,8 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {likeDataProps} from "../../interface/redux/like.interface";
+// import {likeDataProps} from "../../interface/redux/like.interface";
 
 import {http} from "../../config/api.ts";
-import {deserialize} from "../../utils/general.ts";
 import {UrlParamsDataProps} from "../../interface/search/search.interface.ts";
 import {LikeInitialStateProps} from "../../interface/redux/like.interface.ts";
 
@@ -12,17 +11,17 @@ export const getLikes = createAsyncThunk('likes/getLikes', async (data: UrlParam
             params: data
         })
         if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
+        return response.data
     } catch (error) {
         return rejectWithValue(error)
     }
 });
 
-export const createLike = createAsyncThunk('likes/createLike', async (data: likeDataProps, {rejectWithValue}) => {
+export const createOrRemoveLike = createAsyncThunk('likes/createOrRemoveLike', async (id: number, {rejectWithValue}) => {
     try {
-        const response = await http.post(`/likes`, data)
+        const response = await http.post(`/products/like/${id}/`)
         if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
+        return response.data
     } catch (error) {
         return rejectWithValue(error)
     }
@@ -30,7 +29,7 @@ export const createLike = createAsyncThunk('likes/createLike', async (data: like
 
 const initialState: LikeInitialStateProps = {
     likes: [],
-    like: null,
+    like: false,
     loading: false,
     currentPage: 1,
     pageCount: 1,
@@ -55,6 +54,18 @@ export const likeSlice = createSlice({
         builder.addCase(getLikes.rejected, (state: LikeInitialStateProps, action) => {
             console.error(action.payload)
             state.likes = []
+            state.loading = true;
+        })
+        builder.addCase(createOrRemoveLike.fulfilled, (state: LikeInitialStateProps, action) => {            
+            state.like = action.payload?.liked
+            state.loading = false;
+        })
+        builder.addCase(createOrRemoveLike.pending, (state: LikeInitialStateProps) => {
+            state.loading = true;
+        })
+        builder.addCase(createOrRemoveLike.rejected, (state: LikeInitialStateProps, action) => {
+            console.error(action.payload)
+            state.like = false
             state.loading = true;
         })
     }

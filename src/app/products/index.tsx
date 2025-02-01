@@ -1,10 +1,10 @@
 import React from "react";
 import {FilterRowSection, HeaderSection, ProductCardComponent, TopMenuSection} from "../../components"
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {getProducts} from "../../redux/reducers/variable.ts";
+import {getNotifications, getProducts} from "../../redux/reducers/variable.ts";
 import {useLocation} from "react-router-dom";
 import qs from 'qs';
-import {getBucketCount} from "../../redux/reducers/bucket";
+// import {getBucketCount} from "../../redux/reducers/bucket";
 
 export default function Controller() {
 
@@ -26,11 +26,11 @@ export default function Controller() {
                 dispatch(getProducts({}))
             }
         }
-    }, [auth, location.search]);
+    }, [location.search]);
 
     React.useEffect(() => {
         if (auth) {
-            dispatch(getBucketCount())
+            dispatch(getNotifications())
         }
     }, [auth]);
 
@@ -39,7 +39,7 @@ export default function Controller() {
             <div className={'mx-3'}>
                 <HeaderSection/>
             </div>
-            <div className="sticky top-0 z-10 bg-white px-3">
+            <div className="sticky top-0 z-10 px-3 bg-white">
                 <TopMenuSection/>
                 <div className={'py-6'}>
                     <FilterRowSection/>

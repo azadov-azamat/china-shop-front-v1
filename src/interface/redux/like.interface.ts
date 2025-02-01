@@ -4,7 +4,7 @@ import {defaultKeys, productCardProps} from "./variable.interface.ts";
 export interface LikeInitialStateProps {
     loading: boolean;
     likes: likeDataProps[] | [];
-    like: likeDataProps | null;
+    like: boolean;
 
     currentPage: number;
     pageCount: number;
