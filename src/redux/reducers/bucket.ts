@@ -1,21 +1,18 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {http} from "../../config/api.ts";
-import {deserialize} from "../../utils/general.ts";
-import {UrlParamsDataProps} from "../../interface/search/search.interface.ts";
 import {BucketInitialStateProps, bucketProps} from "../../interface/redux/bucket.interface.ts";
 
-export const getBuckets = createAsyncThunk('bucket/getBuckets', async (data: UrlParamsDataProps, {rejectWithValue}) => {
+export const getBuckets = createAsyncThunk('bucket/getBuckets', async (_, {rejectWithValue}) => {
     try {
-        const response = await http.get(`/buckets`, {
-            params: data
-        })
+        const response = await http.get(`/order/active/`)
         if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
+        return response.data
     } catch (error) {
         return rejectWithValue(error)
     }
 });
+
 export const getBucketCount = createAsyncThunk('bucket/getCount', async (_, {rejectWithValue}) => {
     try {
         const response = await http.get(`/buckets/count`)
@@ -28,9 +25,9 @@ export const getBucketCount = createAsyncThunk('bucket/getCount', async (_, {rej
 
 export const createBuckets = createAsyncThunk('bucket/createBuckets', async (data: bucketProps, {rejectWithValue}) => {
     try {
-        const response = await http.post(`/buckets`, data)
+        const response = await http.post(`/order/add/`, data)
         if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
+        return response.data
     } catch (error) {
         return rejectWithValue(error)
     }
@@ -38,9 +35,9 @@ export const createBuckets = createAsyncThunk('bucket/createBuckets', async (dat
 
 export const updateBuckets = createAsyncThunk('bucket/updateBuckets', async (data: bucketProps, {rejectWithValue}) => {
     try {
-        const response = await http.patch(`/buckets/${data.id}`, data)
+        const response = await http.patch(`/order/update/`, data)
         if (response.data === null) return rejectWithValue(response?.data)
-        return await deserialize(response.data)
+        return response.data
     } catch (error) {
         return rejectWithValue(error)
     }
@@ -48,7 +45,7 @@ export const updateBuckets = createAsyncThunk('bucket/updateBuckets', async (dat
 
 export const deleteBuckets = createAsyncThunk('bucket/deleteBuckets', async (id: number, {rejectWithValue}) => {
     try {
-        const response = await http.delete(`/buckets/${id}`)
+        const response = await http.delete(`/order/remove/${id}`)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
@@ -57,7 +54,7 @@ export const deleteBuckets = createAsyncThunk('bucket/deleteBuckets', async (id:
 });
 
 const initialState: BucketInitialStateProps = {
-    buckets: [],
+    buckets: null,
     bucket: null,
     loading: false,
     currentPage: 1,
@@ -82,7 +79,7 @@ export const bucketSlice = createSlice({
         })
         builder.addCase(getBuckets.rejected, (state: BucketInitialStateProps, action) => {
             console.error(action.payload)
-            state.buckets = []
+            state.buckets = null
             state.loading = true;
         })
 
@@ -98,15 +95,15 @@ export const bucketSlice = createSlice({
         })
 
         builder.addCase(updateBuckets.fulfilled, (state: BucketInitialStateProps, action) => {
-            const updatedBucket = action.payload;
-            state.buckets = state.buckets.map((bucket) =>
-                bucket.id === updatedBucket.id
-                    ? {
-                        ...bucket,
-                        count: updatedBucket.count, // Faqat count ni o'zgartirishga e'tibor qaratamiz
-                    }
-                    : bucket
-            );
+            // const updatedBucket = action.payload;
+            // state.buckets = state.buckets.map((bucket) =>
+            //     bucket.id === updatedBucket.id
+            //         ? {
+            //             ...bucket,
+            //             count: updatedBucket.count, // Faqat count ni o'zgartirishga e'tibor qaratamiz
+            //         }
+            //         : bucket
+            // );
             state.loading = false;
         })
         builder.addCase(updateBuckets.pending, (state: BucketInitialStateProps) => {
@@ -117,8 +114,8 @@ export const bucketSlice = createSlice({
             state.loading = true;
         })
 
-        builder.addCase(deleteBuckets.fulfilled, (state: BucketInitialStateProps, action) => {
-            state.buckets = state.buckets.filter((bucket) => Number(bucket.id) !== Number(action.meta.arg));
+        builder.addCase(deleteBuckets.fulfilled, (state: BucketInitialStateProps) => {
+            // state.buckets = state.buckets.filter((bucket) => Number(bucket.id) !== Number(action.meta.arg));
             state.loading = false;
         })
         builder.addCase(deleteBuckets.pending, (state: BucketInitialStateProps) => {

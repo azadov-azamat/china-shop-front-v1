@@ -2,7 +2,7 @@
 
 import {ArrowRightIcon, DismissIcon} from "../../../assets/icons";
 import {Link} from "react-router-dom";
-import {bucketProps} from "../../../interface/redux/bucket.interface.ts";
+import {bucketProps, orderItemProps} from "../../../interface/redux/bucket.interface.ts";
 import {useAppDispatch} from "../../../redux/hooks.ts";
 import {deleteBuckets, updateBuckets} from "../../../redux/reducers/bucket.ts";
 import React from "react";
@@ -10,19 +10,24 @@ import _debounce from "lodash/debounce";
 
 // import React from "react";
 
-interface component extends bucketProps {
+interface component extends orderItemProps {
     isRoute?: boolean;
 }
 
-export default function Component({product, count, size, id, isRoute = false}: component) {
+export default function Component({product, quantity: count, size, id, isRoute = false}: component) {
 
     const dispatch = useAppDispatch();
     const [quantity, setQuantity] = React.useState(count);
 
     const debounceUpdate = React.useCallback(
         _debounce(async () => {
-            if (id) {
-                await dispatch(updateBuckets({id, count: quantity, product, size}));
+            if (id && product) {
+                await dispatch(updateBuckets({
+                    order_item_id: id, 
+                    quantity, 
+                    product_id: product.id || 1, 
+                    size_id: size?.id || 1
+                } as bucketProps));
             }
         }, 500),
         [id, quantity, product]

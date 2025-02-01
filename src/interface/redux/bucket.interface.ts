@@ -1,9 +1,8 @@
-import {UserDataProps} from "./auth.interface.ts";
-import {defaultKeys, productCardProps} from "./variable.interface.ts";
+import {defaultKeys, productCardProps, sizesDataProps} from "./variable.interface.ts";
 
 export interface BucketInitialStateProps {
     loading: boolean;
-    buckets: bucketProps[] | [];
+    buckets: bucketsProps | null;
     bucket: bucketProps | null;
 
     currentPage: number;
@@ -11,10 +10,29 @@ export interface BucketInitialStateProps {
     limit: number;
     totalCount: number;
 }
+export interface bucketsProps extends defaultKeys {
+    order: bucketProps;
+    payment_link: string;
+}
+
+export interface bucketProps extends defaultKeys {
+    user: number;
+    items: orderItemProps[] | [];
+    is_paid: boolean;
+    total_price: number;
+}
+
+export interface orderItemProps extends defaultKeys {
+    product: productCardProps;
+    size: sizesDataProps;
+    quantity: number;
+    available_stock: number;
+    total_price: number;
+}
 
 export interface bucketProps extends defaultKeys{
-    count: number;
-    size: string;
-    product: productCardProps | null;
-    user?: UserDataProps | null;
+    quantity: number;
+    size_id: number;
+    product_id?: number;
+    order_item_id?: number;
 }

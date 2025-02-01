@@ -10,13 +10,13 @@ i18n
     .init({
         fallbackLng: 'ru',
         lng: 'ru',
-        debug: true,
+        debug: false,
         backend: {
             loadPath: '/locales/{{lng}}.json',
         },
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
         },
-    }).then(r => console.log(r))
+    }).then(() => console.log(''))
 
 export default i18n;

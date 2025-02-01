@@ -6,6 +6,7 @@ import {getProductById} from "../../../redux/reducers/variable.ts";
 import Loading from "../../../components/loading";
 import {createBuckets} from "../../../redux/reducers/bucket.ts";
 import {createOrRemoveLike} from "../../../redux/reducers/like.ts";
+import { bucketProps } from '../../../interface/redux/bucket.interface.ts';
 
 export default function Controller() {
     const {id} = useParams<{ id: string}>();
@@ -17,7 +18,7 @@ export default function Controller() {
 
     const [isExpanded, setIsExpanded] = React.useState(false); // Tavsif qisqartirilganmi yoki to'liqmi
     const [quantity, setQuantity] = React.useState(1); // Miqdor holati
-    const [selectedSize, setSelectedSize] = React.useState('');
+    const [selectedSize, setSelectedSize] = React.useState<number>(0);
 
     React.useLayoutEffect(() => {
         if (productId) {
@@ -36,7 +37,11 @@ export default function Controller() {
     };
 
     async function getCheckout() {
-        const {payload} = await dispatch(createBuckets({count: quantity, size: selectedSize, product}))
+        const {payload} = await dispatch(createBuckets({
+            quantity, 
+            size_id: selectedSize, 
+            product_id: product?.id
+        } as bucketProps))
         if (payload.status !== 500) {
             navigate('/carts')
         }
@@ -146,12 +151,12 @@ export default function Controller() {
                             {product.sizes.map((size, key) => (
                                 <button
                                     key={key}
-                                    onClick={() => setSelectedSize(size.size_name)}
+                                    onClick={() => setSelectedSize(size?.id || 0)}
                                     className={`px-4 py-2 border rounded relative ${
-                                        size.size_name === selectedSize ? 'bg-primary-blurple text-white' : 'bg-gray-100 text-gray-600'
+                                        size.id === selectedSize ? 'bg-primary-blurple text-white' : 'bg-gray-100 text-gray-600'
                                     }`}
                                 >
-                                    {size.size_name === selectedSize && <div className={'absolute top-1 right-1'}>
+                                    {size.id === selectedSize && <div className={'absolute top-1 right-1'}>
                                         <CheckIcon/>
                                     </div>}
                                     {size.size_name}

@@ -12,16 +12,12 @@ export default function Controller() {
     const {buckets} = useAppSelector(state => state.bucket)
 
     React.useLayoutEffect(() => {
-        dispatch(getBuckets({}))
+        dispatch(getBuckets())
     }, [])
 
-    const totalPrice = buckets.reduce(
-        (total, cart) => total + (Number(cart.product?.price) * cart.count),
-        0
-    );
 
     return (
-        <div className="mt-5 bg-white px-3 rounded-lg shadow-lg pb-5 min-h-screen">
+        <div className="min-h-screen px-3 pb-5 mt-5 bg-white rounded-lg shadow-lg">
             <div className={'sticky top-0 z-10 pb-4 pt-5 bg-white flex justify-center items-center'}>
                 <div onClick={() => navigate(-1)} className={'absolute left-0 cursor-pointer'}>
                     <ArrowLeftIcon/>
@@ -30,17 +26,17 @@ export default function Controller() {
             </div>
 
             <div className={'mb-24'}>
-                {buckets.map((bucket, key) => (
-                    <ProductGridComponent key={key} {...bucket}  />
+                {buckets?.order.items.map((bucket, key) => (
+                    <ProductGridComponent key={key} {...bucket} id={buckets.order.id} />
                 ))}
             </div>
 
-            <div className="fixed bottom-0 left-0 right-0 bg-white py-6 px-3">
+            <div className="fixed bottom-0 left-0 right-0 px-3 py-6 bg-white">
                 <button onClick={() => navigate('/payment/3')} className="relative uppercase bg-primary-blurple text-xs text-white w-full py-4 rounded-[90px] flex justify-center
                 items-center gap-4">
                     <ExitIcon/>
                     GO TO CHECKOUt
-                    <span className="absolute right-4 p-1 bg-primary-blurple-dark rounded">${totalPrice}</span>
+                    <span className="absolute p-1 rounded right-4 bg-primary-blurple-dark">${buckets?.order.total_price}</span>
                 </button>
             </div>
         </div>
