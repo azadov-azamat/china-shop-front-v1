@@ -4,7 +4,7 @@ export interface InitialStateProps {
     product: productCardProps | null;
     products: productCardProps[] | [];
     carts: cartCardProps[] | [];
-
+    notifications: notificationDataProps[] | [];
     currentPage: number;
     pageCount: number;
     limit: number;
@@ -30,6 +30,13 @@ export interface sizesDataProps extends defaultKeys{
     count: number;
     is_available: boolean;
     size_name: string;
+}
+
+export interface notificationDataProps extends defaultKeys {
+    title: string;
+    message?: string;
+    has_viewed: boolean;
+    
 }
 
 export interface defaultKeys {

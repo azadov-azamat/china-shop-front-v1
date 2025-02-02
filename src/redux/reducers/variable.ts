@@ -59,6 +59,7 @@ export const getCategories = createAsyncThunk('variables/getCategories', async (
 const initialState: InitialStateProps = {
     products: [],
     carts: [],
+    notifications: [],
     product: null,
     subscribeLoading: false,
     loading: false,
@@ -98,6 +99,18 @@ export const variableSlice = createSlice({
         builder.addCase(getProductById.rejected, (state: InitialStateProps, action) => {
             console.error(action.payload)
             state.product = null
+            state.loading = true;
+        })
+
+        builder.addCase(getNotifications.fulfilled, (state: InitialStateProps, action) => {
+            state.notifications = action.payload
+            state.loading = false;
+        })
+        builder.addCase(getNotifications.pending, (state: InitialStateProps) => {
+            state.loading = true;
+        })
+        builder.addCase(getNotifications.rejected, (state: InitialStateProps) => {
+            state.notifications = []
             state.loading = true;
         })
     }

@@ -16,7 +16,6 @@ export default function Controller() {
     const query = qs.parse(location.search, {ignoreQueryPrefix: true})
 
     React.useLayoutEffect(() => {
-        if (auth) {
             if (location.search) {
                 const newQuery = query;
                 delete newQuery.telegramId
@@ -25,7 +24,6 @@ export default function Controller() {
             } else {
                 dispatch(getProducts({}))
             }
-        }
     }, [location.search]);
 
     React.useEffect(() => {

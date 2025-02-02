@@ -1,6 +1,6 @@
 import {
     CartController, ErrorPaymentController, FavoriteController,
-    IndexController, PaymentController,
+    IndexController, NotificationController, PaymentController,
     ProductPreviewController, SearchController, SuccessPaymentController
 } from '../app/index';
 
@@ -68,5 +68,11 @@ export const routes = [
         name: 'payment page',
         path: '/payment/:orderId',
         component: PaymentController
+    },
+    {
+        id: 9,
+        name: 'notification page',
+        path: '/notifications',
+        component: NotificationController
     }
 ]

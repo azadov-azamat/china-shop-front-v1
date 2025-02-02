@@ -16,3 +16,5 @@ export {default as SiteLoadingComponent} from './loading-site';
 // export {default as LanguageDropdownComponent} from './language-dropdown';
 // export {default as ContactCardComponent} from './contact-card';
 export {default as ScrollToTopComponent} from './scroll-to-top';
+export {default as PageHeaderComponent} from './page-header';
+export {default as DateFormatComponent} from './date-format';

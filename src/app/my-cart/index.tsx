@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {ProductGridComponent} from "../../components";
-import {ArrowLeftIcon, ExitIcon} from "../../assets/icons";
+import {PageHeaderComponent, ProductGridComponent} from "../../components";
+import {ExitIcon} from "../../assets/icons";
 import {useNavigate} from "react-router-dom";
 import React from "react";
 import {getBuckets} from "../../redux/reducers/bucket.ts";
@@ -18,12 +18,7 @@ export default function Controller() {
 
     return (
         <div className="min-h-screen px-3 pb-5 mt-5 bg-white rounded-lg shadow-lg">
-            <div className={'sticky top-0 z-10 pb-4 pt-5 bg-white flex justify-center items-center'}>
-                <div onClick={() => navigate(-1)} className={'absolute left-0 cursor-pointer'}>
-                    <ArrowLeftIcon/>
-                </div>
-                <h2 className="text-lg font-semibold">My Cart</h2>
-            </div>
+            <PageHeaderComponent title={'My Cart'}/>
 
             <div className={'mb-24'}>
                 {buckets?.order.items.map((bucket, key) => (

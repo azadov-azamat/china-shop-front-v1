@@ -1,21 +1,14 @@
 import {useAppSelector} from "../../redux/hooks.ts";
-import {ProductCardComponent} from "../../components";
-import {ArrowLeftIcon, SearchIcon} from "../../assets/icons";
-import {useNavigate} from "react-router-dom";
+import {PageHeaderComponent, ProductCardComponent} from "../../components";
+import {SearchIcon} from "../../assets/icons";
 
 export default function Controller() {
 
-    const navigate = useNavigate()
     const {products} = useAppSelector(state => state.variables)
 
     return (
-        <div className="mt-5 bg-white px-3 rounded-lg shadow-lg">
-            <div className={'sticky top-0 z-10 pb-4 pt-5 bg-white flex justify-center items-center'}>
-                <div onClick={() => navigate(-1)} className={'absolute left-0 cursor-pointer'}>
-                    <ArrowLeftIcon/>
-                </div>
-                <h2 className="text-lg font-semibold">Find Products</h2>
-            </div>
+        <div className="px-3 mt-5 bg-white rounded-lg shadow-lg">
+            <PageHeaderComponent title={'Find Products'}/>
 
             <div className={'relative flex items-center w-full h-12 bg-[#F2F3F2] rounded-2xl'}>
                 <input type="text" className={'w-full ml-12 border-none h-full rounded-2xl bg-transparent focus:outline-none focus:ring-0'}/>
