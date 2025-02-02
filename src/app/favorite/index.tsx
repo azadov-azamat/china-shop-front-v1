@@ -3,17 +3,17 @@ import {PageHeaderComponent, ProductCardComponent} from "../../components";
 import {BucketIcon} from "../../assets/icons";
 import {useNavigate} from "react-router-dom";
 import React from "react";
-import {getLikes} from "../../redux/reducers/like.ts";
+import { getLikedProducts } from "../../redux/reducers/variable.ts";
 // import {createBuckets} from "../../redux/reducers/bucket.ts";
 
 export default function Controller() {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
-    const {likes} = useAppSelector(state => state.like)
+    const {liked} = useAppSelector(state => state.variables)
 
     React.useLayoutEffect(() => {
-        dispatch(getLikes({}))
+        dispatch(getLikedProducts({}))
     }, [])
 
     // asynx function transitionToBucket() {
@@ -26,8 +26,8 @@ export default function Controller() {
             <PageHeaderComponent title={'Favorite'}/>
 
             <div className={'flex flex-wrap max-350:flex-auto gap-4 justify-between'}>
-                {likes.map((like) => (
-                    <ProductCardComponent key={like.id} {...like.product}/>
+                {liked.map((like) => (
+                    <ProductCardComponent key={like.id} {...like}/>
                 ))}
             </div>
 

@@ -4,17 +4,17 @@ import {
     FullViewIcon
 } from "../../assets/icons"
 
-export default function Component() {
+export default function Component({toggle, view}: {view: string; toggle: any}) {
     return (
-        <div className="flex justify-between items-center w-full">
+        <div className="flex items-center justify-between w-full">
             <div className="flex items-center space-x-2">
-                <span className="font-semibold text-sm">FILTER & SORT</span>
+                <span className="text-sm font-semibold">FILTER & SORT</span>
                 <SortToolIcon/>
             </div>
 
             <div className="flex items-center space-x-2">
-                <GridViewIcon/>
-                <FullViewIcon/>
+                <FullViewIcon onClick={toggle} active={view === 'list'}/>
+                <GridViewIcon onClick={toggle} active={view === 'grid'}/>
             </div>
         </div>
     )

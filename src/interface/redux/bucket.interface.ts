@@ -11,11 +11,11 @@ export interface BucketInitialStateProps {
     totalCount: number;
 }
 export interface bucketsProps extends defaultKeys {
-    order: bucketProps;
+    order: orderBucketProps;
     payment_link: string;
 }
 
-export interface bucketProps extends defaultKeys {
+export interface orderBucketProps extends defaultKeys {
     user: number;
     items: orderItemProps[] | [];
     is_paid: boolean;
@@ -24,10 +24,10 @@ export interface bucketProps extends defaultKeys {
 
 export interface orderItemProps extends defaultKeys {
     product: productCardProps;
-    size: sizesDataProps;
-    quantity: number;
-    available_stock: number;
-    total_price: number;
+    size?: sizesDataProps;
+    quantity?: number;
+    available_stock?: number;
+    total_price?: number;
 }
 
 export interface bucketProps extends defaultKeys{

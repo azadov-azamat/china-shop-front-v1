@@ -26,6 +26,18 @@ export const getProducts = createAsyncThunk('variables/getProducts', async (data
     }
 });
 
+export const getLikedProducts = createAsyncThunk('variables/getLikedProducts', async (data: UrlParamsDataProps, {rejectWithValue}) => {
+    try {
+        const response = await http.get(`/liked-products`, {
+            params: data
+        })
+        if (response.data === null) return rejectWithValue(response?.data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+});
+
 export const getProductById = createAsyncThunk('variables/getProductById', async (id: string, {rejectWithValue}) => {
     try {
         const response = await http.get(`/products/${id}`)
@@ -58,6 +70,7 @@ export const getCategories = createAsyncThunk('variables/getCategories', async (
 
 const initialState: InitialStateProps = {
     products: [],
+    liked: [],
     carts: [],
     notifications: [],
     product: null,
@@ -86,6 +99,19 @@ export const variableSlice = createSlice({
         builder.addCase(getProducts.rejected, (state: InitialStateProps, action) => {
             console.error(action.payload)
             state.products = []
+            state.loading = true;
+        })
+
+        builder.addCase(getLikedProducts.fulfilled, (state: InitialStateProps, action) => {
+            state.liked = action.payload
+            state.loading = false;
+        })
+        builder.addCase(getLikedProducts.pending, (state: InitialStateProps) => {
+            state.loading = true;
+        })
+        builder.addCase(getLikedProducts.rejected, (state: InitialStateProps, action) => {
+            console.error(action.payload)
+            state.liked = []
             state.loading = true;
         })
 

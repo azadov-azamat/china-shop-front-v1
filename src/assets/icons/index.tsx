@@ -1,4 +1,4 @@
-import React from "react";
+import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 
 export const BellIcon = () => {
     return (
@@ -20,14 +20,9 @@ export const BucketIcon = ({size = 24, color = "black"}: { size?: number; color?
     )
 }
 
-export const LikeIcon = ({like = false}) => {
-    const [liked, setLiked] = React.useState(like); // Like bo'lsa true, aks holda false
-
-    const toggleLike = () => {
-        setLiked(!liked);
-    };
-
-    return liked ? (<svg
+export const LikeIcon = ({like = false, toggleLike}: {like: boolean, toggleLike?: any}) => {
+  
+    return like ? (<svg
                 onClick={toggleLike}
                 width="22"
                 height="21"
@@ -38,7 +33,7 @@ export const LikeIcon = ({like = false}) => {
             >
                 <path fillRule="evenodd" clipRule="evenodd"
                       d="M12.1027 0.696073C13.1724 0.172464 14.1056 -1.53839e-06 15.5532 1.61018e-05C19.2579 0.0153583 22 3.13984 22 7.11988C22 10.1578 20.3062 13.0923 17.1512 15.9299C15.4951 17.4193 13.3807 18.8933 11.8664 19.6775L11 20.1261L10.1336 19.6775C8.61932 18.8933 6.50489 17.4193 4.84884 15.9299C1.69383 13.0923 0 10.1578 0 7.11988C0 3.09727 2.71644 0 6.45455 0C7.85028 0 8.83132 0.188775 9.92181 0.728134C10.3015 0.915918 10.6582 1.13866 10.99 1.39576C11.335 1.12339 11.7066 0.88993 12.1027 0.696073Z"
-                      fill="#D8143A"/>
+                      fill="#472CB6"/>
             </svg>
         )
         :
@@ -117,23 +112,31 @@ export const ExitIcon = () => {
 }
 
 
-export const FullViewIcon = () => {
+export const FullViewIcon = ({onClick, active = false}: {onClick: any; active?: boolean}) => {
     return (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="18" height="18" fill="black"/>
-        </svg>
+        <div onClick={()=> onClick('list')}>
+
+            <CiGrid41 className={`${active ? "text-primary-blurple-dark" : "text-black"}`} size={22} strokeWidth={1}/>
+
+            {/* <svg width="18" height="18" viewBox="0 0 18 18" fill="red" xmlns="http://www.w3.org/2000/svg">
+                <rect width="18" height="18" fill={active ? '#472CB6' : "black"}/>
+            </svg> */}
+        </div>
     )
 }
 
 
-export const GridViewIcon = () => {
+export const GridViewIcon = ({onClick, active = true}: {onClick: any; active?: boolean}) => {
     return (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.7" y="0.7" width="6.6" height="6.6" stroke="black" strokeWidth="1.4"/>
-            <rect x="0.7" y="10.7" width="6.6" height="6.6" stroke="black" strokeWidth="1.4"/>
-            <rect x="10.7" y="0.7" width="6.6" height="6.6" stroke="black" strokeWidth="1.4"/>
-            <rect x="10.7" y="10.7" width="6.6" height="6.6" stroke="black" strokeWidth="1.4"/>
-        </svg>
+        <div onClick={()=> onClick('grid')}>
+            <CiGrid2H className={`${active ? "text-primary-blurple-dark" : "text-black"}`} size={22} strokeWidth={1}/>
+            {/* <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.7" y="0.7" width="6.6" height="6.6" stroke={active ? '#472CB6' : "black"} strokeWidth={active ? "1.8" : "1.4"}/>
+                <rect x="0.7" y="10.7" width="6.6" height="6.6" stroke={active ? '#472CB6' : "black"} strokeWidth={active ? "1.8" : "1.4"}/>
+                <rect x="10.7" y="0.7" width="6.6" height="6.6" stroke={active ? '#472CB6' : "black"} strokeWidth={active ? "1.8" : "1.4"}/>
+                <rect x="10.7" y="10.7" width="6.6" height="6.6" stroke={active ? '#472CB6' : "black"} strokeWidth={active ? "1.8" : "1.4"}/>
+            </svg> */}
+        </div>
     )
 }
 

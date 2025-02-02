@@ -1,6 +1,6 @@
 // import React from 'react';
 
-import {ArrowRightIcon, DismissIcon} from "../../../assets/icons";
+import {ArrowRightIcon, DismissIcon, LikeIcon} from "../../../assets/icons";
 import {Link} from "react-router-dom";
 import {bucketProps, orderItemProps} from "../../../interface/redux/bucket.interface.ts";
 import {useAppDispatch} from "../../../redux/hooks.ts";
@@ -17,7 +17,7 @@ interface component extends orderItemProps {
 export default function Component({product, quantity: count, size, id, isRoute = false}: component) {
 
     const dispatch = useAppDispatch();
-    const [quantity, setQuantity] = React.useState(count);
+    const [quantity, setQuantity] = React.useState<number>(count || 0);
 
     const debounceUpdate = React.useCallback(
         _debounce(async () => {
@@ -57,12 +57,12 @@ export default function Component({product, quantity: count, size, id, isRoute =
                     <div className={'mt-4'}>
                         <h3 className="text-[16px] font-semibold text-primary-blurple">{product?.name}</h3>
                     </div>
-                    {!isRoute && <p className="font-semibold">
+                    <p className="font-semibold">
                         <span className="text-lg font-bold">{product?.price.toFixed(0)}</span>
                         <span
                             className="text-sm mb-[2px]">.{(Number(product?.price) % 1).toFixed(2).split('.')[1]}</span>
                         {/* <span className="text-sm mb-[2px]">&nbsp; USD</span> */}
-                    </p>}
+                    </p>
                 </div>
             </div>
             {!isRoute ? <div className="flex items-end h-full">
@@ -79,12 +79,8 @@ export default function Component({product, quantity: count, size, id, isRoute =
                 >
                     +
                 </button>
-            </div> : <div className={'h-full flex items-start mt-7'}>
-                <p className="font-semibold">
-                    <span className="text-lg font-bold">{product?.price.toFixed(0)}</span>
-                    <span className="text-sm mb-[2px]">.{(Number(product?.price) % 1).toFixed(2).split('.')[1]}</span>
-                    {/* <span className="text-sm mb-[2px]">&nbsp; USD</span> */}
-                </p>
+            </div> : <div className="h-full">
+                <LikeIcon like={product.liked_by_user}/>
             </div>}
             {!isRoute ? <button
                 onClick={handleRemove}

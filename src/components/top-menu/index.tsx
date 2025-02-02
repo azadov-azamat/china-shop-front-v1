@@ -2,9 +2,11 @@ import React from "react";
 import {CATEGORIES} from "../../utils/constants.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import qs from "qs";
+import { useTranslation } from "react-i18next";
 
 export default function Component() {
 
+    const {t} = useTranslation();
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -39,7 +41,7 @@ export default function Component() {
                             : 'text-gray-600 font-medium'
                     }`}
                 >
-                    {category.name}
+                    {t (category.name)}
                 </button>
             ))}
         </div>

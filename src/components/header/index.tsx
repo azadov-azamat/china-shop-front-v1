@@ -19,7 +19,7 @@ export default function Component() {
                 </Link>
                 <BucketComponent isActive={totalCount > 0} value={totalCount}/>
                 <Link to={'/favorite'}>
-                    <LikeIcon/>
+                    <LikeIcon like={false}/>
                 </Link>
                 <Link to={'/search'}>
                     <SearchIcon/>

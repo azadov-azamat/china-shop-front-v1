@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {PageHeaderComponent, ProductGridComponent} from "../../components";
+import {PageHeaderComponent} from "../../components";
 import {ExitIcon} from "../../assets/icons";
 import {useNavigate} from "react-router-dom";
 import React from "react";
@@ -21,9 +21,9 @@ export default function Controller() {
             <PageHeaderComponent title={'My Cart'}/>
 
             <div className={'mb-24'}>
-                {buckets?.order.items.map((bucket, key) => (
+                {/* {buckets?.order.items.map((bucket, key) => (
                     <ProductGridComponent key={key} {...bucket} id={buckets.order.id} />
-                ))}
+                ))} */}
             </div>
 
             <div className="fixed bottom-0 left-0 right-0 px-3 py-6 bg-white">

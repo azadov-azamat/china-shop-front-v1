@@ -25,6 +25,23 @@ export default function Controller() {
             dispatch(getProductById(String(productId)))
         }
     }, [productId])
+
+    React.useEffect(() =>{
+        if (product) {
+            dispatch({
+                type: 'likes/createOrRemoveLike/fulfilled',
+                payload: { liked: product.liked_by_user }
+            });
+        }
+        
+        return () => {
+            dispatch({
+                type: 'likes/createOrRemoveLike/fulfilled',
+                payload: { liked: false }
+            });
+        };
+    }, [product])
+    
     const isShort = product?.description && product?.description.length < 150;
     const shortDescription = product?.description.slice(0, 150) + (isShort ? '...' : ''); // 150 ta belgi
 
@@ -59,6 +76,7 @@ export default function Controller() {
         </div>
     }
 
+
     return !product ? (
         <div>Mahsulot topilmadi</div>
     ) : (
@@ -71,7 +89,7 @@ export default function Controller() {
                         </button>
 
                         <div className={'w-12 h-12 flex items-center justify-center bg-white rounded-full'} onClick={liked}>
-                            <LikeIcon like={product?.liked_by_user || like}/>
+                            <LikeIcon like={like}/>
                         </div>
                     </div>
                 </div>

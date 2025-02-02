@@ -2,6 +2,9 @@
   "app": {
     "title": "China shop uz"
   },
+  "all": "Hammasi",
+  "mens" : "Erkaklar",
+  "womens" : "Ayollar",
   "address-company": "Toshkent sh.Yunusobod t. Axmad Donish ko'chasi 20A",
   "about-us": "Biz haqimizda",
   "news": "Yangiliklar",
