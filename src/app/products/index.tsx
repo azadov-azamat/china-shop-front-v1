@@ -1,5 +1,5 @@
 import React from "react";
-import {FilterRowSection, HeaderSection, ProductCardComponent, ProductGridComponent, TopMenuSection} from "../../components"
+import {ContentLoaderProductGrid, ContentLoaderProductList, FilterRowSection, HeaderSection, ProductCardComponent, ProductGridComponent, TopMenuSection} from "../../components"
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {getNotifications, getProducts} from "../../redux/reducers/variable.ts";
 import {useLocation} from "react-router-dom";
@@ -8,13 +8,14 @@ import { getBuckets } from "../../redux/reducers/bucket.ts";
 import { motion } from "framer-motion";
 import { BiX } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import { productCardProps } from "../../interface/redux/variable.interface.ts";
 
 export default function Controller() {
 
     const dispatch = useAppDispatch()
     const location = useLocation()
     const { t } = useTranslation();
-    const {products} = useAppSelector(state => state.variables)
+    const {products, loading} = useAppSelector(state => state.variables)
     const {auth} = useAppSelector(state => state.auth)
     const query = qs.parse(location.search, {ignoreQueryPrefix: true})
 
@@ -51,6 +52,9 @@ export default function Controller() {
         }
     }, [auth]);
 
+    const RenderProductItem = React.memo(({ item }: {item: productCardProps}) => view === 'list' ? <ProductCardComponent {...item} /> : <ProductGridComponent isRoute product={item}/>);
+    const RenderContentLoaderProductItem = React.memo(() => view === 'list' ? <ContentLoaderProductList /> : <ContentLoaderProductGrid/>);
+                                                                
     return (
         <>
             <div className={'mx-3'}>
@@ -63,15 +67,10 @@ export default function Controller() {
                 </div>
             </div>
             <div className={'flex flex-wrap max-350:flex-auto gap-4 justify-between px-3'}>
-                {products.map((item, index) => view === 'list' ? <ProductCardComponent
-                    key={index}
-                    {...item}
-                /> : <ProductGridComponent
-                        key={index}
-                        isRoute
-                        product={item}
-                    />
-                )}
+                {
+                    loading ? [1, 2, 3, 4, 5].map(()=> <RenderContentLoaderProductItem/>)
+                    : products.map((item, index) => <RenderProductItem item={item} key={index}/>)
+                }
             </div>
             {isVisible && (
         <motion.div

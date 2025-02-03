@@ -18,3 +18,6 @@ export {default as SiteLoadingComponent} from './loading-site';
 export {default as ScrollToTopComponent} from './scroll-to-top';
 export {default as PageHeaderComponent} from './page-header';
 export {default as DateFormatComponent} from './date-format';
+export {default as ContentLoaderProductGrid} from './content-loader/product-grid';
+export {default as ContentLoaderProductList} from './content-loader/product-list';
+export {default as ContentLoaderNotification} from './content-loader/notification';

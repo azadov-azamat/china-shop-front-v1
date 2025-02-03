@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {PageHeaderComponent, ProductGridComponent} from "../../components";
+import {ContentLoaderProductGrid, PageHeaderComponent, ProductGridComponent} from "../../components";
 import {ExitIcon} from "../../assets/icons";
 import React from "react";
 import {getBuckets} from "../../redux/reducers/bucket.ts";
@@ -9,7 +9,7 @@ export default function Controller() {
 
     const dispatch = useAppDispatch();
     const {t} = useTranslation();
-    const {buckets} = useAppSelector(state => state.bucket)
+    const {buckets, loading} = useAppSelector(state => state.bucket)
 
     React.useLayoutEffect(() => {
         dispatch(getBuckets())
@@ -20,7 +20,7 @@ export default function Controller() {
             <PageHeaderComponent title={'my-cart'}/>
 
             <div className={'mb-24'}>
-                {buckets?.order.items.map((bucket, key) => (
+                {loading ? [1,2 ,3, 4, 5].map(()=> <ContentLoaderProductGrid/>) : buckets?.order.items.map((bucket, key) => (
                     <ProductGridComponent key={key} {...bucket} id={buckets.order.id} />
                 ))}
             </div>

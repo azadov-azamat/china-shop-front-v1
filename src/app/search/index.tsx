@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {PageHeaderComponent, ProductCardComponent} from "../../components";
+import {ContentLoaderProductList, PageHeaderComponent, ProductCardComponent} from "../../components";
 import {SearchIcon} from "../../assets/icons";
 import React from "react";
 import _debounce from "lodash/debounce";
@@ -10,7 +10,7 @@ export default function Controller() {
 
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
-    const {products} = useAppSelector(state => state.variables)
+    const {products, loading} = useAppSelector(state => state.variables)
     const [search, setSearch] = React.useState<string>('')
 
     const debounceUpdate = React.useCallback(
@@ -62,8 +62,8 @@ export default function Controller() {
                     {search.length > 0 && (t ('result-find', {totalCount: products.length, search}))}
                 </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-[#f2f3f2] rounded-t-3xl top-40 grid justify-between grid-cols-2 gap-2 px-4 py-6 overflow-y-auto">
-                {products.map((item, index) => <ProductCardComponent
+            <div className="absolute bottom-0 left-0 right-0 grid justify-between grid-cols-2 gap-2 px-4 py-6 overflow-y-auto top-40">
+            {loading ? [1,2 ,3, 4, 5].map(()=> <ContentLoaderProductList/>) : products.map((item, index) => <ProductCardComponent
                         key={index}
                         {...item}
                 />)}

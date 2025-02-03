@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {PageHeaderComponent, ProductCardComponent} from "../../components";
+import {ContentLoaderProductList, PageHeaderComponent, ProductCardComponent} from "../../components";
 import {BucketIcon} from "../../assets/icons";
 import {useNavigate} from "react-router-dom";
 import React from "react";
@@ -12,7 +12,7 @@ export default function Controller() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
-    const {liked} = useAppSelector(state => state.variables)
+    const {liked, loading} = useAppSelector(state => state.variables)
 
     React.useLayoutEffect(() => {
         dispatch(getLikedProducts({}))
@@ -28,7 +28,7 @@ export default function Controller() {
             <PageHeaderComponent title={'favorite'}/>
 
             <div className={'flex flex-wrap max-350:flex-auto gap-4 justify-between'}>
-                {liked.map((like) => (
+            {loading ? [1,2 ,3, 4].map(()=> <ContentLoaderProductList/>) :liked.map((like) => (
                     <ProductCardComponent key={like.id} {...like}/>
                 ))}
             </div>
