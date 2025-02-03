@@ -14,13 +14,14 @@ export default function Controller() {
     React.useLayoutEffect(() => {
         dispatch(getBuckets())
     }, [])
+    console.log(buckets?.order.items);
 
     return (
         <div className="min-h-screen px-3 pb-5 mt-5 bg-white rounded-lg shadow-lg">
             <PageHeaderComponent title={'my-cart'}/>
 
             <div className={'mb-24'}>
-                {loading ? [1,2 ,3, 4, 5].map(()=> <ContentLoaderProductGrid/>) : buckets?.order.items.map((bucket, key) => (
+                {loading ? [1,2 ,3, 4, 5].map((_, key)=> <ContentLoaderProductGrid key={key}/>) : buckets?.order.items.map((bucket, key) => (
                     <ProductGridComponent key={key} {...bucket} id={buckets.order.id} />
                 ))}
             </div>
@@ -30,7 +31,7 @@ export default function Controller() {
                 items-center gap-4">
                     <ExitIcon/>
                     {t ('go-to-checkout')}
-                    <span className="absolute p-1 rounded right-4 bg-primary-blurple-dark">${buckets?.order.total_price}</span>
+                    <span className="absolute p-1 rounded right-4 bg-primary-blurple-dark">{buckets?.order.total_price}</span>
                 </a>
             </div>
         </div>

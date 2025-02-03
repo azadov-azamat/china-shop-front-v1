@@ -35,7 +35,7 @@ export const createBuckets = createAsyncThunk('bucket/createBuckets', async (dat
 
 export const updateBuckets = createAsyncThunk('bucket/updateBuckets', async (data: bucketProps, {rejectWithValue}) => {
     try {
-        const response = await http.patch(`/order/update/`, data)
+        const response = await http.post(`/order/add/`, data)
         if (response.data === null) return rejectWithValue(response?.data)
         return response.data
     } catch (error) {
@@ -94,16 +94,18 @@ export const bucketSlice = createSlice({
             state.loading = true;
         })
 
-        builder.addCase(updateBuckets.fulfilled, (state: BucketInitialStateProps) => {
-            // const updatedBucket = action.payload;
-            // state.buckets = state.buckets.map((bucket) =>
-            //     bucket.id === updatedBucket.id
-            //         ? {
-            //             ...bucket,
-            //             count: updatedBucket.count, // Faqat count ni o'zgartirishga e'tibor qaratamiz
-            //         }
-            //         : bucket
-            // );
+        builder.addCase(updateBuckets.fulfilled, (state: BucketInitialStateProps, action) => {
+            const updatedItem = action.payload;
+            if (state.buckets?.order?.items) {
+                const itemIndex = state.buckets.order.items.findIndex(
+                    (item) => item.order_item_id === updatedItem.order_item_id
+                );
+    
+                if (itemIndex !== -1) {
+                    state.buckets.order.items[itemIndex] = updatedItem;
+                    state.buckets.order.total_price = updatedItem.total_price
+                }
+            }
             state.loading = false;
         })
         builder.addCase(updateBuckets.pending, (state: BucketInitialStateProps) => {

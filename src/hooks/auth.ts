@@ -27,7 +27,7 @@ const useAuth = () => {
         const local = localStorage.getItem('authenticate') || "{}"
         const { token } = JSON.parse(local);
         const telegramId = searchParams.get("tg-id") || '5461570887';
-        const lang = searchParams.get("lang") || 'ru';
+        const lang = searchParams.get("lang") || 'uz';
 
         i18n.changeLanguage(lang).catch((error) => {
             console.error("Tilni sozlashda xatolik:", error);

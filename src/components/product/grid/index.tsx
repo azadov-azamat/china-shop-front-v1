@@ -13,27 +13,30 @@ interface component extends orderItemProps {
     isRoute?: boolean;
 }
 
-export default function Component({product, order_item_id, quantity: count, size, id, isRoute = false}: component) {
+export default function Component({product, order_item_id, quantity, size, id, isRoute = false}: component) {
 
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
-    const [quantity, setQuantity] = React.useState<number>(count || 0);
+    const [count, setCount] = React.useState<number>(quantity || 0);
 
     const debounceUpdate = React.useCallback(
         _debounce(async () => {
-            if (id && product) {
+            console.log("quantity", count);
+            
+            if (product) {
                 await dispatch(updateBuckets({
-                    order_item_id, 
-                    quantity
+                    quantity: count, 
+                    product_id: product.id || 1, 
+                    size_id: size?.id || 1
                 } as bucketProps));
             }
         }, 500),
-        [id, quantity, product]
+        [count, product]
     );
 
     const handleQuantityChange = React.useCallback(
         (delta: number) => {
-            setQuantity((prevQuantity) => Math.max(1, prevQuantity + delta));
+            setCount((prevQuantity) => Math.max(1, prevQuantity + delta));
             debounceUpdate();
         },
         [debounceUpdate]
