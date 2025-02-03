@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {getNotifications, getProducts} from "../../redux/reducers/variable.ts";
 import {useLocation} from "react-router-dom";
 import qs from 'qs';
+import { getBuckets } from "../../redux/reducers/bucket.ts";
 // import {getBucketCount} from "../../redux/reducers/bucket";
 
 export default function Controller() {
@@ -30,9 +31,16 @@ export default function Controller() {
             }
     }, [location.search]);
 
+    const fetchApies = async() => {
+        await Promise.all([
+            dispatch(getNotifications()),
+            dispatch(getBuckets())
+        ])
+    }
+    
     React.useEffect(() => {
         if (auth) {
-            dispatch(getNotifications())
+            fetchApies()
         }
     }, [auth]);
 
@@ -41,7 +49,7 @@ export default function Controller() {
             <div className={'mx-3'}>
                 <HeaderSection/>
             </div>
-            <div className="sticky top-0 z-10 px-3 bg-white">
+            <div className="px-3 bg-white">
                 <TopMenuSection/>
                 <div className={'py-6'}>
                     <FilterRowSection view={view} toggle={toggleView}/>

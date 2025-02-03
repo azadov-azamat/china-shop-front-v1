@@ -3,10 +3,12 @@ import {PageHeaderComponent, ProductGridComponent} from "../../components";
 import {ExitIcon} from "../../assets/icons";
 import React from "react";
 import {getBuckets} from "../../redux/reducers/bucket.ts";
+import { useTranslation } from "react-i18next";
 
 export default function Controller() {
 
     const dispatch = useAppDispatch();
+    const {t} = useTranslation();
     const {buckets} = useAppSelector(state => state.bucket)
 
     React.useLayoutEffect(() => {
@@ -15,7 +17,7 @@ export default function Controller() {
 
     return (
         <div className="min-h-screen px-3 pb-5 mt-5 bg-white rounded-lg shadow-lg">
-            <PageHeaderComponent title={'My Cart'}/>
+            <PageHeaderComponent title={'my-cart'}/>
 
             <div className={'mb-24'}>
                 {buckets?.order.items.map((bucket, key) => (
@@ -27,7 +29,7 @@ export default function Controller() {
                 <a href={buckets?.payment_link} className="relative uppercase bg-primary-blurple text-xs text-white w-full py-4 rounded-[90px] flex justify-center
                 items-center gap-4">
                     <ExitIcon/>
-                    GO TO CHECKOUt
+                    {t ('go-to-checkout')}
                     <span className="absolute p-1 rounded right-4 bg-primary-blurple-dark">${buckets?.order.total_price}</span>
                 </a>
             </div>

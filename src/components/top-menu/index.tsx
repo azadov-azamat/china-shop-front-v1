@@ -33,11 +33,13 @@ export default function Component() {
         if (query?.category_name) {
           const category = CATEGORIES.find(item => item.name === query.category_name);
           setActiveTab(category || CATEGORIES[0]); // Default qiymatni o‘rnating
+        } else {
+            setActiveTab(CATEGORIES[0]);
         }
-      }, [query]);
+      }, [query?.category_name]);
 
     return (
-        <div className="flex items-center justify-between space-x-8 border-b border-gray-300">
+        <div className="flex items-center justify-between my-4 space-x-8 border-b border-gray-300">
             {CATEGORIES.map((category, key) => (
                 <button
                     key={key}

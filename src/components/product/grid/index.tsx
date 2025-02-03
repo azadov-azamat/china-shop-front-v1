@@ -1,14 +1,13 @@
-// import React from 'react';
+import React from "react";
 
-import {ArrowRightIcon, DismissIcon, LikeIcon} from "../../../assets/icons";
+import {DismissIcon, LikeIcon} from "../../../assets/icons";
 import {Link} from "react-router-dom";
 import {bucketProps, orderItemProps} from "../../../interface/redux/bucket.interface.ts";
 import {useAppDispatch} from "../../../redux/hooks.ts";
 import {deleteBuckets, updateBuckets} from "../../../redux/reducers/bucket.ts";
-import React from "react";
 import _debounce from "lodash/debounce";
-
-// import React from "react";
+import { BsArrowRight } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 interface component extends orderItemProps {
     isRoute?: boolean;
@@ -17,16 +16,15 @@ interface component extends orderItemProps {
 export default function Component({product, order_item_id, quantity: count, size, id, isRoute = false}: component) {
 
     const dispatch = useAppDispatch();
+    const { t } = useTranslation();
     const [quantity, setQuantity] = React.useState<number>(count || 0);
 
     const debounceUpdate = React.useCallback(
         _debounce(async () => {
             if (id && product) {
                 await dispatch(updateBuckets({
-                    order_item_id: id, 
-                    quantity, 
-                    product_id: product.id || 1, 
-                    size_id: size?.id || 1
+                    order_item_id, 
+                    quantity
                 } as bucketProps));
             }
         }, 500),
@@ -50,14 +48,17 @@ export default function Component({product, order_item_id, quantity: count, size
 
     return (
         <div className="relative flex items-center justify-between w-full p-5 mb-4 rounded-lg h-36 bg-primary-amber">
-            <div className="flex items-center h-full">
+            <div className="relative flex items-center h-full">
                 <img src={product?.image} alt={product?.name}
                      className={(isRoute ? 'w-20 h-20 ' : 'w-24 h-24 ') + ` object-contain rounded-lg mr-2`}/>
-                <div className={'flex flex-col h-full justify-between'}>
-                    <div className={'mt-4'}>
+                <div className={'flex flex-col h-full '}>
+                    <div>
                         <h3 className="text-[16px] font-semibold text-primary-blurple">{product?.name}</h3>
                     </div>
-                    <p className="font-semibold">
+                    <p className="flex p-0 m-0 text-sm truncate text-primary-gray">
+                        {isRoute ? product.description : t ('selected-size') + ": " + size?.size_name}
+                    </p>
+                    <p className="absolute bottom-0 font-semibold">
                         <span className="text-lg font-bold">{product?.price.toFixed(0)}</span>
                         <span
                             className="text-sm mb-[2px]">.{(Number(product?.price) % 1).toFixed(2).split('.')[1]}</span>
@@ -91,7 +92,7 @@ export default function Component({product, order_item_id, quantity: count, size
                 to={'/product/' + product?.id}
                 className="absolute bottom-5 right-5"
             >
-                <ArrowRightIcon/>
+                <BsArrowRight size={20}/>
             </Link>}
         </div>
     );

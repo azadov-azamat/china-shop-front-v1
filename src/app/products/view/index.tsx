@@ -7,8 +7,10 @@ import Loading from "../../../components/loading";
 import {createBuckets} from "../../../redux/reducers/bucket.ts";
 import {createOrRemoveLike} from "../../../redux/reducers/like.ts";
 import { bucketProps } from '../../../interface/redux/bucket.interface.ts';
+import { useTranslation } from 'react-i18next';
 
 export default function Controller() {
+    const { t } = useTranslation();
     const {id} = useParams<{ id: string}>();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -160,7 +162,7 @@ export default function Controller() {
                     </div>
 
                     <div className="mt-4">
-                        <h3 className="font-[Lato] font-bold text-[12px] leading-[19px]">DESCRIPTION</h3>
+                        <h3 className="font-[Lato] font-bold text-[12px] leading-[19px] capitalize">{t ('description')}</h3>
                         <p className="text-gray-600 font-[Lato] font-medium text-[12px] leading-[19px]">
                             {isShort ? product.description : isExpanded ? (
                                 <>
@@ -169,7 +171,7 @@ export default function Controller() {
                                         className="text-primary-blurple font-[Lato] font-medium text-[12px] bg-transparent leading-[19px]"
                                         onClick={() => setIsExpanded(!isExpanded)}
                                     >
-                                        less
+                                        {t ('less')}
                                     </button>
                                 </>
                             ) : (
@@ -179,7 +181,7 @@ export default function Controller() {
                                         className="text-primary-blurple bg-transparent font-[Lato] font-medium text-[12px] leading-[19px]"
                                         onClick={() => setIsExpanded(!isExpanded)}
                                     >
-                                        detail
+                                        {t ('detail')}
                                     </button>
                                 </>
                             )}
@@ -187,7 +189,7 @@ export default function Controller() {
                     </div>
 
                     <div className="mt-4">
-                        <h3 className="font-[Lato] font-bold text-[12px] leading-[19px]">SELECT SIZE</h3>
+                        <h3 className="font-[Lato] font-bold text-[12px] leading-[19px] capitalize">{t ('select-size')}</h3>
                         <div className="flex mt-2 space-x-2">
                             {product.sizes.map((size, key) => (
                                 <button
@@ -208,8 +210,8 @@ export default function Controller() {
 
                     <button onClick={getCheckout}
                             disabled={!selectedSize || bucketLoad}
-                            className="mt-6 w-full text-xs bg-primary-blurple flex justify-center items-center gap-4 text-white py-4 rounded-[30px] h-md:mb-0">
-                        <BucketIcon color={'white'}/> ADD TO CART
+                            className="mt-6 w-full text-xs bg-primary-blurple uppercase flex justify-center items-center gap-4 text-white py-4 rounded-[30px] h-md:mb-0">
+                        <BucketIcon color={'white'}/> {t ('add-to-cart')}
                     </button>
                 </div>
             </div>

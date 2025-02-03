@@ -4,12 +4,14 @@ import {BucketIcon} from "../../assets/icons";
 import {useNavigate} from "react-router-dom";
 import React from "react";
 import { getLikedProducts } from "../../redux/reducers/variable.ts";
+import { useTranslation } from "react-i18next";
 // import {createBuckets} from "../../redux/reducers/bucket.ts";
 
 export default function Controller() {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
+    const { t } = useTranslation();
     const {liked} = useAppSelector(state => state.variables)
 
     React.useLayoutEffect(() => {
@@ -23,7 +25,7 @@ export default function Controller() {
 
     return (
         <div className="min-h-screen px-3 mt-5 bg-white rounded-lg shadow-lg">
-            <PageHeaderComponent title={'Favorite'}/>
+            <PageHeaderComponent title={'favorite'}/>
 
             <div className={'flex flex-wrap max-350:flex-auto gap-4 justify-between'}>
                 {liked.map((like) => (
@@ -35,7 +37,7 @@ export default function Controller() {
                 <button onClick={() => navigate('/carts')} className="relative bg-primary-blurple text-xs text-white w-full py-4 rounded-[90px] flex justify-center
                 items-center gap-4 uppercase">
                     <BucketIcon color={'white'}/>
-                    get carts
+                    {t ('get-cart')}
                 </button>
             </div>
         </div>

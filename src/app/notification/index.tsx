@@ -15,7 +15,7 @@ export default function Controller() {
     return (
         <div className="relative h-screen">
             <div className="px-3 mt-5 bg-white rounded-lg">
-                <PageHeaderComponent title={'Notifications'}/>
+                <PageHeaderComponent title={'notifications'}/>
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-[#f2f3f2] rounded-t-3xl top-20 flex flex-col gap-2 px-4 py-6 overflow-y-auto">
                 {

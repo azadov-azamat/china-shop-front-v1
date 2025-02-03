@@ -94,7 +94,7 @@ export const bucketSlice = createSlice({
             state.loading = true;
         })
 
-        builder.addCase(updateBuckets.fulfilled, (state: BucketInitialStateProps, action) => {
+        builder.addCase(updateBuckets.fulfilled, (state: BucketInitialStateProps) => {
             // const updatedBucket = action.payload;
             // state.buckets = state.buckets.map((bucket) =>
             //     bucket.id === updatedBucket.id
@@ -115,7 +115,13 @@ export const bucketSlice = createSlice({
         })
 
         builder.addCase(deleteBuckets.fulfilled, (state: BucketInitialStateProps, action) => {
-            // state.buckets = state.buckets.filter((bucket) => Number(bucket.id) !== Number(action.meta.arg));
+            const orderItemId = action.payload;
+
+            if (state.buckets?.order?.items) {
+                state.buckets.order.items = state.buckets.order.items.filter(
+                    (item) => item.order_item_id !== orderItemId
+                );
+            }
             state.loading = false;
         })
         builder.addCase(deleteBuckets.pending, (state: BucketInitialStateProps) => {

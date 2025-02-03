@@ -8,8 +8,9 @@ import {Link} from "react-router-dom";
 import {useAppSelector} from "../../redux/hooks.ts";
 
 export default function Component() {
-    const {totalCount} = useAppSelector(state => state.bucket)
+    const {buckets} = useAppSelector(state => state.bucket)
     const {notifications} = useAppSelector(state => state.variables)
+    
     return (
         <header className={'w-100 flex justify-between items-center mt-5 mb-5'}>
             <h2 className={'font-bold text-xl'}>Uzchinetrade</h2>
@@ -17,7 +18,10 @@ export default function Component() {
                 <Link to={'/notifications'}>
                     <NotificationComponent value={notifications.length} isActive={true}/>
                 </Link>
-                <BucketComponent isActive={totalCount > 0} value={totalCount}/>
+                <BucketComponent 
+                    isActive={buckets && buckets.order.items.length > 0 || false} 
+                    value={buckets && buckets.order.items.length || 0}
+                />
                 <Link to={'/favorite'}>
                     <LikeIcon like={false}/>
                 </Link>
