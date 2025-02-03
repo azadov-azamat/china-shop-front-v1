@@ -114,7 +114,7 @@ export const bucketSlice = createSlice({
             state.loading = true;
         })
 
-        builder.addCase(deleteBuckets.fulfilled, (state: BucketInitialStateProps) => {
+        builder.addCase(deleteBuckets.fulfilled, (state: BucketInitialStateProps, action) => {
             // state.buckets = state.buckets.filter((bucket) => Number(bucket.id) !== Number(action.meta.arg));
             state.loading = false;
         })

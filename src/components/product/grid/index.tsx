@@ -14,7 +14,7 @@ interface component extends orderItemProps {
     isRoute?: boolean;
 }
 
-export default function Component({product, quantity: count, size, id, isRoute = false}: component) {
+export default function Component({product, order_item_id, quantity: count, size, id, isRoute = false}: component) {
 
     const dispatch = useAppDispatch();
     const [quantity, setQuantity] = React.useState<number>(count || 0);
@@ -42,8 +42,8 @@ export default function Component({product, quantity: count, size, id, isRoute =
     );
 
     const handleRemove = React.useCallback(async () => {
-        if (id) {
-            await dispatch(deleteBuckets(id));
+        if (order_item_id) {
+            await dispatch(deleteBuckets(order_item_id));
         }
     }, [id]);
 

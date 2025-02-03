@@ -15,6 +15,7 @@ export default function Controller() {
     const productId = parseInt(String(id));
     const {product, loading} = useAppSelector(state => state.variables)
     const {like} = useAppSelector(state => state.like)
+    const {loading: bucketLoad} = useAppSelector(state => state.bucket)
 
     const [isExpanded, setIsExpanded] = React.useState(false); // Tavsif qisqartirilganmi yoki to'liqmi
     const [quantity, setQuantity] = React.useState(1); // Miqdor holati
@@ -54,16 +55,38 @@ export default function Controller() {
     };
 
     async function getCheckout() {
-        const {payload} = await dispatch(createBuckets({
-            quantity, 
-            size_id: selectedSize, 
-            product_id: product?.id
-        } as bucketProps))
-        if (payload.status !== 500) {
-            navigate('/carts')
+        if (!selectedSize) return; // Agar o'lcham tanlanmagan bo'lsa, qaytib chiqamiz.
+    
+        // Mahsulotlar tanlanganligini tekshirish (multiple sizes or products)
+        const selectedProducts = product?.sizes?.filter(size => size.id === selectedSize);
+    
+        if (selectedProducts && selectedProducts.length > 0) {
+            // Har bir mahsulot uchun alohida action chaqiriladi
+            const results = await Promise.all(
+                selectedProducts.map(async size => {
+                    return dispatch(
+                        createBuckets({
+                            quantity,
+                            size_id: size.id,
+                            product_id: product?.id
+                        } as bucketProps)
+                    );
+                })
+            );
+    
+            // Agar barcha actionlar muvaffaqiyatli bo'lsa, "Cart" sahifasiga o'tamiz
+            const isSuccess = results.every(
+                ({ payload }) => payload && payload.status !== 500
+            );
+    
+            if (isSuccess) {
+                navigate('/carts');
+            } else {
+                alert('Some products could not be added to the cart.');
+            }
         }
     }
-
+    
     async function liked(){
         if (!product?.id) return;
 
@@ -184,7 +207,7 @@ export default function Controller() {
                     </div>
 
                     <button onClick={getCheckout}
-                            disabled={!selectedSize}
+                            disabled={!selectedSize || bucketLoad}
                             className="mt-6 w-full text-xs bg-primary-blurple flex justify-center items-center gap-4 text-white py-4 rounded-[30px] h-md:mb-0">
                         <BucketIcon color={'white'}/> ADD TO CART
                     </button>

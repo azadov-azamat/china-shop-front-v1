@@ -28,6 +28,7 @@ export interface orderItemProps extends defaultKeys {
     quantity?: number;
     available_stock?: number;
     total_price?: number;
+    order_item_id?: number;
 }
 
 export interface bucketProps extends defaultKeys{

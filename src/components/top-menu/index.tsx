@@ -28,6 +28,14 @@ export default function Component() {
         }
         setActiveTab(category)
     }
+
+    React.useEffect(() => {
+        if (query?.category_name) {
+          const category = CATEGORIES.find(item => item.name === query.category_name);
+          setActiveTab(category || CATEGORIES[0]); // Default qiymatni o‘rnating
+        }
+      }, [query]);
+
     return (
         <div className="flex items-center justify-between space-x-8 border-b border-gray-300">
             {CATEGORIES.map((category, key) => (

@@ -12,7 +12,7 @@ export default function Component() {
     const {notifications} = useAppSelector(state => state.variables)
     return (
         <header className={'w-100 flex justify-between items-center mt-5 mb-5'}>
-            <h2 className={'font-bold text-xl'}>UzChinaShop</h2>
+            <h2 className={'font-bold text-xl'}>Uzchinetrade</h2>
             <div className="flex items-center !gap-4">
                 <Link to={'/notifications'}>
                     <NotificationComponent value={notifications.length} isActive={true}/>
