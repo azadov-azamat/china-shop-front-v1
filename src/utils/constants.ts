@@ -1,6 +1,6 @@
 import {
     CartController, ErrorPaymentController, FavoriteController,
-    IndexController, NotificationController, PaymentController,
+    IndexController, NotificationController,
     ProductPreviewController, SearchController, SuccessPaymentController
 } from '../app/index';
 
