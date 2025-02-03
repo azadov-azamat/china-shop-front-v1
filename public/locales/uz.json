@@ -16,6 +16,8 @@
   "go-to-checkout" : "Rasmiylashtirish",
   "find-by-name" : "Nomi bo'yicha izlang",
   "filter-sort": "filter & sort",
+  "filters" : "Filterlar",
+  "find-by-filter": "Filter bo'yicha qidirish",
   "description" : "Ta'rif",
   "less" : "Kamroq",
   "detail" : "Batafsil",
