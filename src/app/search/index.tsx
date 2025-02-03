@@ -25,6 +25,15 @@ export default function Controller() {
         [search]
     );
     
+    React.useEffect(() => {
+        return () => {
+            dispatch({
+                type: 'variables/getProducts/fulfilled',
+                payload: []
+            })
+        }
+    }, [])
+    
     const handlechange =(text: string) => {
         setSearch(text);
         debounceUpdate()
@@ -51,10 +60,10 @@ export default function Controller() {
                 </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-[#f2f3f2] rounded-t-3xl top-40 grid justify-between grid-cols-2 gap-2 px-4 py-6 overflow-y-auto">
-            {products.map((item, index) => <ProductCardComponent
+                {products.map((item, index) => <ProductCardComponent
                         key={index}
                         {...item}
-                    />)}
+                />)}
             </div>
         </div>
     )

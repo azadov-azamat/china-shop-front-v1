@@ -63,12 +63,12 @@ export const routes = [
         path: '/error-payment',
         component: ErrorPaymentController
     },
-    {
-        id: 8,
-        name: 'payment page',
-        path: '/payment/:orderId',
-        component: PaymentController
-    },
+    // {
+    //     id: 8,
+    //     name: 'payment page',
+    //     path: '/payment/:orderId',
+    //     component: PaymentController
+    // },
     {
         id: 9,
         name: 'notification page',
